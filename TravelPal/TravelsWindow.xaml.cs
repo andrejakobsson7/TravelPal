@@ -28,5 +28,13 @@ namespace TravelPal
         {
             MessageBox.Show("TravelPal is your one-stop shop for booking and administrating travels all over the world.\nOn this page you can:\n- Book a new travel, by clicking 'Add travel'.\n- Get to know more about a specific travel, by clicking on the particular travel and then clicking 'See details'\n- Cancel travel, by clicking on the particular travel and then the button 'Remove'", "About TravelPal", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AddTravelWindow addTravelWindow = new();
+            addTravelWindow.Show();
+
+            Close();
+        }
     }
 }

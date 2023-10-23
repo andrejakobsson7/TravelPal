@@ -42,4 +42,10 @@
         Spain,
         Sweden
     }
+
+    public enum TravelType
+    {
+        Vacation,
+        WorkTrip
+    }
 }

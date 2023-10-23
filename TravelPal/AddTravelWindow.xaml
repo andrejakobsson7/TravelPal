@@ -145,7 +145,7 @@
             />
         <Label
             Name="lblWorkTripOrVacation"
-            Content="All Inclusive"
+            Content=""
             Grid.Column="1"
             Grid.Row="10"
             FontSize="15"
@@ -207,7 +207,7 @@
             Grid.Row="9"
             Height="30"
             VerticalContentAlignment="Center"
-            Background="MintCream"
+            Background="MintCream" SelectionChanged="cbTypeOfTravel_SelectionChanged"
             />
         
         <!--Datepickers-->
@@ -228,12 +228,14 @@
         
         <!--Checkboxes-->
         <CheckBox
+            Name="cxAllInclusive"
             Content="Yes, it's All Inclusive!"
             Grid.Column="2"
             Grid.Row="10"
             Height="30"
             FontSize="15"
             VerticalContentAlignment="Center"
+            Visibility="Hidden"
             />
         
         <!--Buttons-->
