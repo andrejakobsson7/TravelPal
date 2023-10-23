@@ -92,6 +92,7 @@
         
         <!--Passwordboxes-->
         <PasswordBox
+            Name="pbPassword"
             Grid.Column="3"
             Grid.Row="3"
             Height="30"
@@ -109,7 +110,7 @@
             Height="45"
             Width="100"
             FontSize="15"
-            Background="DarkTurquoise"
+            Background="DarkTurquoise" Click="btnSignIn_Click"
             />
         <Button
             Name="btnRegister"

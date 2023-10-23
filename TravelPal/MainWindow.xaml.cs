@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using TravelPal.Managers;
 
 namespace TravelPal
 {
@@ -18,6 +19,17 @@ namespace TravelPal
             registerWindow.Show();
 
             Close();
+        }
+
+        private void btnSignIn_Click(object sender, RoutedEventArgs e)
+        {
+            bool isSuccessfulLogin = UserManager.SignIn(txtUsername.Text, pbPassword.Password);
+            if (isSuccessfulLogin)
+            {
+                TravelsWindow travelsWindow = new();
+                travelsWindow.Show();
+                Close();
+            }
         }
     }
 }

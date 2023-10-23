@@ -7,29 +7,13 @@
         Bulgaria,
         Croatia,
         Cyprus,
-        Czechia,
         Denmark,
-        Estonia,
-        Finland,
-        France,
-        Germany,
-        Greece,
-        Hungary,
-        Ireland,
-        Italy,
-        Latvia,
-        Lithuania,
-        Luxembourg,
-        Malta,
-        Netherlands,
-        Poland,
         Portugal,
         Romania,
         Slovakia,
         Slovenia,
         Spain,
         Sweden
-
     }
     public enum Country
     {
@@ -44,6 +28,18 @@
         Russia,
         Thailand,
         USA,
-        Vietnam
+        Vietnam,
+        Austria,
+        Belgium,
+        Bulgaria,
+        Croatia,
+        Cyprus,
+        Denmark,
+        Portugal,
+        Romania,
+        Slovakia,
+        Slovenia,
+        Spain,
+        Sweden
     }
 }
