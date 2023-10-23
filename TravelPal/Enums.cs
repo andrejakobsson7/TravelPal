@@ -1,0 +1,49 @@
+﻿namespace TravelPal
+{
+    public enum EuropeanCountry
+    {
+        Austria,
+        Belgium,
+        Bulgaria,
+        Croatia,
+        Cyprus,
+        Czechia,
+        Denmark,
+        Estonia,
+        Finland,
+        France,
+        Germany,
+        Greece,
+        Hungary,
+        Ireland,
+        Italy,
+        Latvia,
+        Lithuania,
+        Luxembourg,
+        Malta,
+        Netherlands,
+        Poland,
+        Portugal,
+        Romania,
+        Slovakia,
+        Slovenia,
+        Spain,
+        Sweden
+
+    }
+    public enum Country
+    {
+        Argentina,
+        Australia,
+        Brazil,
+        China,
+        England,
+        Iceland,
+        India,
+        Japan,
+        Russia,
+        Thailand,
+        USA,
+        Vietnam
+    }
+}
