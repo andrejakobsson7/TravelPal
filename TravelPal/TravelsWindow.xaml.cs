@@ -1,5 +1,7 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using TravelPal.Managers;
+using TravelPal.Models;
 
 namespace TravelPal
 {
@@ -12,6 +14,17 @@ namespace TravelPal
         {
             InitializeComponent();
             lblWelcomeUser.Content = $"Welcome {UserManager.SignedInUser.Username}";
+            if (UserManager.SignedInUser.GetType() == typeof(User))
+            {
+                User loggedInUser = (User)UserManager.SignedInUser;
+                foreach (Travel travel in loggedInUser.Travels)
+                {
+                    ListBoxItem item = new();
+                    item.Tag = travel;
+                    item.Content = travel.GetInfo();
+                    lstTravels.Items.Add(item);
+                }
+            }
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)

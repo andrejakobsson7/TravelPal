@@ -26,7 +26,6 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
@@ -68,7 +67,7 @@
             Foreground="black"
             VerticalAlignment="Center"
             HorizontalAlignment="Left"
-            Padding="0"
+            Padding="0" Width="96"
             />
         <Label
             Content="Country"
@@ -118,23 +117,11 @@
             HorizontalAlignment="Left"
             Padding="0"
             />
-        <Label
-            Content="Travel days"
-            Grid.Column="1"
-            Grid.Row="8"
-            FontSize="15"
-            FontFamily="Arial"
-            FontWeight="DemiBold"
-            Foreground="black"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Left"
-            Padding="0"
-            />
 
         <Label
             Content="Type of travel"
             Grid.Column="1"
-            Grid.Row="9"
+            Grid.Row="8"
             FontSize="15"
             FontFamily="Arial"
             FontWeight="DemiBold"
@@ -147,7 +134,7 @@
             Name="lblWorkTripOrVacation"
             Content=""
             Grid.Column="1"
-            Grid.Row="10"
+            Grid.Row="9"
             FontSize="15"
             FontFamily="Arial"
             FontWeight="DemiBold"
@@ -175,18 +162,9 @@
             Background="MintCream"
             />
         <TextBox
-            Name="txtTravelDays"
-            Grid.Column="2"
-            Grid.Row="8"
-            Height="30"
-            VerticalContentAlignment="Center"
-            Background="MintCream"
-            IsReadOnly="True"
-            />
-        <TextBox
             Name="txtMeetingDetails"
             Grid.Column="2"
-            Grid.Row="10"
+            Grid.Row="9"
             Height="30"
             Visibility="Hidden"
             />
@@ -204,7 +182,7 @@
         <ComboBox
             Name="cbTypeOfTravel"
             Grid.Column="2"
-            Grid.Row="9"
+            Grid.Row="8"
             Height="30"
             VerticalContentAlignment="Center"
             Background="MintCream" SelectionChanged="cbTypeOfTravel_SelectionChanged"
@@ -231,7 +209,7 @@
             Name="cxAllInclusive"
             Content="Yes, it's All Inclusive!"
             Grid.Column="2"
-            Grid.Row="10"
+            Grid.Row="9"
             Height="30"
             FontSize="15"
             VerticalContentAlignment="Center"
@@ -243,11 +221,11 @@
             Name="btnAdd"
             Content="Add travel"
             Grid.Column="2"
-            Grid.Row="11"
+            Grid.Row="10"
             Height="45"
             Width="100"
             FontSize="13"
-            Background="DarkTurquoise"
+            Background="DarkTurquoise" Click="btnAdd_Click"
             />
         <Button
             Name="btnReturn"

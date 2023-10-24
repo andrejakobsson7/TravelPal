@@ -10,5 +10,9 @@ namespace TravelPal.Models
         {
             AllInclusive = isAllInclusive;
         }
+        public override string GetInfo()
+        {
+            return $"Vacation to: {Destination}, {Country}";
+        }
     }
 }

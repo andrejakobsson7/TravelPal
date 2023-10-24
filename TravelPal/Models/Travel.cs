@@ -23,7 +23,12 @@ namespace TravelPal.Models
 
         private int CalculateTravelDays(DateTime startDate, DateTime endDate)
         {
-            return (int)(startDate - endDate).TotalDays;
+            return (int)(endDate - startDate).TotalDays;
+        }
+
+        public virtual string GetInfo()
+        {
+            return $"{Destination}, {Country}";
         }
     }
 }
