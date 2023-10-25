@@ -12,7 +12,7 @@ namespace TravelPal.Models
         }
         public override string GetInfo()
         {
-            return $"Vacation to: {Destination}, {Country}";
+            return $"{Destination}, {Country} (Vacation)";
         }
     }
 }

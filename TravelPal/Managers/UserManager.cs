@@ -84,5 +84,19 @@ namespace TravelPal.Managers
             return false;
         }
 
+        public static List<User> GetAllUsers()
+        {
+            List<User> allUsers = new();
+            foreach (IUser user in Users)
+            {
+                if (user.GetType() == typeof(User))
+                {
+                    User userToAdd = (User)user;
+                    allUsers.Add(userToAdd);
+                }
+            }
+            return allUsers;
+        }
+
     }
 }

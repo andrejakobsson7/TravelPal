@@ -38,17 +38,19 @@ namespace TravelPal
             lblWorkTripOrVacation.Content = "";
             cxAllInclusive.Visibility = Visibility.Hidden;
             txtMeetingDetails.Visibility = Visibility.Hidden;
-
-            TravelType selectedTravelType = (TravelType)cbTypeOfTravel.SelectedItem;
-            if (selectedTravelType == TravelType.Vacation)
+            if (cbTypeOfTravel.SelectedIndex >= 0)
             {
-                lblWorkTripOrVacation.Content = "All Inclusive";
-                cxAllInclusive.Visibility = Visibility.Visible;
-            }
-            else if (selectedTravelType == TravelType.WorkTrip)
-            {
-                lblWorkTripOrVacation.Content = "Meeting details";
-                txtMeetingDetails.Visibility = Visibility.Visible;
+                TravelType selectedTravelType = (TravelType)cbTypeOfTravel.SelectedItem;
+                if (selectedTravelType == TravelType.Vacation)
+                {
+                    lblWorkTripOrVacation.Content = "All Inclusive";
+                    cxAllInclusive.Visibility = Visibility.Visible;
+                }
+                else if (selectedTravelType == TravelType.WorkTrip)
+                {
+                    lblWorkTripOrVacation.Content = "Meeting details";
+                    txtMeetingDetails.Visibility = Visibility.Visible;
+                }
             }
         }
 
@@ -60,10 +62,11 @@ namespace TravelPal
                 TravelType selectedTravelType = (TravelType)cbTypeOfTravel.SelectedItem;
                 if (selectedTravelType == TravelType.Vacation)
                 {
-                    bool isAllInclusive = (bool)cxAllInclusive.IsChecked;
+                    bool isAllInclusive = (bool)cxAllInclusive.IsChecked!;
                     Vacation newVacation = new(isAllInclusive, txtDestination.Text, (Country)cbCountry.SelectedItem, int.Parse(txtTravellers.Text), (DateTime)dpStartDate.SelectedDate!, (DateTime)dpEndDate.SelectedDate!);
                     TravelManager.AddTravel(newVacation);
                     ConfirmSuccessfullyRegisteredTravel(newVacation);
+                    UpdateUi();
                 }
                 else if (selectedTravelType == TravelType.WorkTrip && ValidateMeetingDetails(txtMeetingDetails.Text))
                 {
@@ -71,11 +74,9 @@ namespace TravelPal
                     WorkTrip newWorkTrip = new(meetingDetails, txtDestination.Text, (Country)cbCountry.SelectedItem, int.Parse(txtTravellers.Text), (DateTime)dpStartDate.SelectedDate!, (DateTime)dpEndDate.SelectedDate!);
                     TravelManager.AddTravel(newWorkTrip);
                     ConfirmSuccessfullyRegisteredTravel(newWorkTrip);
+                    UpdateUi();
                 }
             }
-
-            //Läs input
-            //Validera input
         }
         private bool ValidateDestinationInput(string input)
         {
@@ -84,8 +85,7 @@ namespace TravelPal
                 MessageBox.Show("No destination has been entered");
                 return false;
             }
-            bool isValid = ValidateSelectedItemInComboBox(cbCountry.SelectedItem, cbCountry);
-            return isValid;
+            return ValidateSelectedItemInComboBox(cbCountry.SelectedItem, cbCountry);
         }
         private bool ValidateSelectedItemInComboBox(object value, ComboBox selectedCombobox)
         {
@@ -125,8 +125,7 @@ namespace TravelPal
                 MessageBox.Show(e.Message);
                 return false;
             }
-            bool isValid = ValidateSelectedDatesInDatePickers(dpStartDate.SelectedDate, dpEndDate.SelectedDate);
-            return isValid;
+            return ValidateSelectedDatesInDatePickers(dpStartDate.SelectedDate!, dpEndDate.SelectedDate!);
         }
 
         private bool ValidateSelectedDatesInDatePickers(object startDate, object endDate)
@@ -141,23 +140,21 @@ namespace TravelPal
                 MessageBox.Show("No end date has been entered");
                 return false;
             }
-            bool isValid = ValidateDates((DateTime)startDate, (DateTime)endDate);
-            return isValid;
+            return ValidateDates((DateTime)startDate, (DateTime)endDate);
         }
         private bool ValidateDates(DateTime startDate, DateTime endDate)
         {
             if (startDate > endDate)
             {
-                MessageBox.Show("Travel can't have end date before start date");
+                MessageBox.Show("End date must come after start date");
                 return false;
             }
             else if (startDate < DateTime.Today)
             {
-                MessageBox.Show("Travel has to have start date in the future");
+                MessageBox.Show("Start date can't be before todays' date");
                 return false;
             }
-            bool isValid = ValidateSelectedItemInComboBox(cbTypeOfTravel.SelectedItem, cbTypeOfTravel);
-            return isValid;
+            return ValidateSelectedItemInComboBox(cbTypeOfTravel.SelectedItem, cbTypeOfTravel);
         }
 
         private bool ValidateMeetingDetails(string meetingDetails)
@@ -173,6 +170,19 @@ namespace TravelPal
         private void ConfirmSuccessfullyRegisteredTravel(Travel travel)
         {
             MessageBox.Show($"New travel to {travel.Destination} has been registered!");
+        }
+
+        private void UpdateUi()
+        {
+            txtDestination.Text = "";
+            cbCountry.SelectedIndex = -1;
+            txtTravellers.Text = "";
+            dpStartDate.SelectedDate = null;
+            dpEndDate.SelectedDate = null;
+            cbTypeOfTravel.SelectedIndex = -1;
+            cxAllInclusive.IsChecked = false;
+            txtMeetingDetails.Text = "";
+
         }
     }
 }

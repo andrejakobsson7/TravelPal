@@ -54,6 +54,7 @@
             Padding="0"
             />
         <Label
+            Name="lblTravels"
             Content="My travels"
             Grid.Column="2"
             Grid.Row="2"
@@ -107,7 +108,7 @@
             Width="100"
             HorizontalAlignment="Center"
             FontSize="13"
-            Background="Yellow"
+            Background="Yellow" Click="btnDetails_Click"
             />
         <Button
             Name="btnRemove"
@@ -118,7 +119,7 @@
             Width="100"
             HorizontalAlignment="Right"
             FontSize="13"
-            Background="DarkOrange"
+            Background="DarkOrange" Click="btnRemove_Click"
             />
         <Button
             Name="btnInfo"

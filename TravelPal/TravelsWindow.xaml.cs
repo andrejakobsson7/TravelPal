@@ -14,17 +14,7 @@ namespace TravelPal
         {
             InitializeComponent();
             lblWelcomeUser.Content = $"Welcome {UserManager.SignedInUser.Username}";
-            if (UserManager.SignedInUser.GetType() == typeof(User))
-            {
-                User loggedInUser = (User)UserManager.SignedInUser;
-                foreach (Travel travel in loggedInUser.Travels)
-                {
-                    ListBoxItem item = new();
-                    item.Tag = travel;
-                    item.Content = travel.GetInfo();
-                    lstTravels.Items.Add(item);
-                }
-            }
+            UpdateUi();
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
@@ -48,6 +38,74 @@ namespace TravelPal
             addTravelWindow.Show();
 
             Close();
+        }
+
+        private void btnDetails_Click(object sender, RoutedEventArgs e)
+        {
+            bool isValidChoice = ValidateTripHasBeenSelected();
+            if (isValidChoice)
+            {
+                ListBoxItem selectedItem = (ListBoxItem)lstTravels.SelectedItem;
+                Travel selectedTravel = (Travel)selectedItem.Tag;
+                TravelDetailsWindow travelDetailsWindow = new(selectedTravel);
+                travelDetailsWindow.Show();
+
+                Close();
+            }
+        }
+
+        private bool ValidateTripHasBeenSelected()
+        {
+            if (lstTravels.SelectedIndex < 0)
+            {
+                MessageBox.Show("No travel has been selected");
+                return false;
+            }
+            return true;
+        }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            bool isValidChoice = ValidateTripHasBeenSelected();
+            if (isValidChoice)
+            {
+                ListBoxItem selectedItem = (ListBoxItem)lstTravels.SelectedItem;
+                Travel selectedTravel = (Travel)selectedItem.Tag;
+                MessageBoxResult response = MessageBox.Show($"Please confirm that you want to remove travel to {selectedTravel.Destination}.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (response == MessageBoxResult.Yes)
+                {
+                    TravelManager.RemoveTravel(selectedTravel);
+                    MessageBox.Show("Travel was successfully removed", "Confirmation");
+                    UpdateUi();
+                }
+            }
+        }
+        private void UpdateUi()
+        {
+            lstTravels.Items.Clear();
+            if (UserManager.SignedInUser.GetType() == typeof(User))
+            {
+                User loggedInUser = (User)UserManager.SignedInUser;
+                foreach (Travel travel in loggedInUser.Travels)
+                {
+                    ListBoxItem item = new();
+                    item.Tag = travel;
+                    item.Content = travel.GetInfo();
+                    lstTravels.Items.Add(item);
+                }
+            }
+            else if (UserManager.SignedInUser.GetType() == typeof(Admin))
+            {
+                lblTravels.Content = "All registered travels";
+                foreach (Travel travel in TravelManager.Travels)
+                {
+                    ListBoxItem item = new();
+                    item.Tag = travel;
+                    item.Content = travel.GetInfo();
+                    lstTravels.Items.Add(item);
+                }
+            }
+
         }
     }
 }

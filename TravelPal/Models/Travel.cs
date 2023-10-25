@@ -1,9 +1,11 @@
 ﻿using System;
+using TravelPal.Managers;
 
 namespace TravelPal.Models
 {
     public class Travel
     {
+        public int Id { get; set; }
         public string Destination { get; set; }
         public Country Country { get; set; }
         public int Travellers { get; set; }
@@ -19,6 +21,7 @@ namespace TravelPal.Models
             StartDate = startDate;
             EndDate = endDate;
             TravelDays = CalculateTravelDays(startDate, endDate);
+            Id = TravelManager.GetId();
         }
 
         private int CalculateTravelDays(DateTime startDate, DateTime endDate)
