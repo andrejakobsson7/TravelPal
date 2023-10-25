@@ -9,7 +9,11 @@ namespace TravelPal.Managers
     {
         public static List<IUser> Users { get; set; } = new()
         {
-            new User("user", "password", Country.USA),
+            new User("user", "password", Country.Sweden, new List<Travel>
+            {
+                new Vacation(true, "New York", Country.USA, 2, DateTime.Today, DateTime.Today.AddDays(3)),
+                new WorkTrip("Internal discussions", "Stockholm", Country.Sweden, 1, DateTime.Today, DateTime.Today.AddDays(2))
+            }),
             new Admin("admin", "password", Country.USA)
         };
 
@@ -42,7 +46,7 @@ namespace TravelPal.Managers
         {
             if (password.Length < 6)
             {
-                MessageBox.Show("Password needs to be 6 characters or more", "Error");
+                MessageBox.Show("Password needs to be at least 6 characters long", "Error");
                 return false;
             }
             return true;
@@ -65,10 +69,6 @@ namespace TravelPal.Managers
                 return false;
             }
         }
-        public static bool SignInUser(string username, string password)
-        {
-            return true;
-        }
 
         public static bool SignIn(string username, string password)
         {
@@ -83,20 +83,5 @@ namespace TravelPal.Managers
             MessageBox.Show("Invalid username and/or password", "Error");
             return false;
         }
-
-        public static List<User> GetAllUsers()
-        {
-            List<User> allUsers = new();
-            foreach (IUser user in Users)
-            {
-                if (user.GetType() == typeof(User))
-                {
-                    User userToAdd = (User)user;
-                    allUsers.Add(userToAdd);
-                }
-            }
-            return allUsers;
-        }
-
     }
 }
