@@ -14,7 +14,11 @@
 
         public string GetInfo()
         {
-            return "";
+            if (Required)
+            {
+                return $"{Name}, IMPORTANT!";
+            }
+            return $"{Name}";
         }
     }
 }

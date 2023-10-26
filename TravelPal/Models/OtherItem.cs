@@ -13,7 +13,7 @@
 
         public string GetInfo()
         {
-            return "";
+            return $"{Quantity} {Name}";
         }
     }
 }

@@ -13,12 +13,10 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -188,6 +186,7 @@
             Padding="10 0 0 5"
             />
         <Label
+            Name="lblQuantity"
             Content="Quantity"
             Grid.Column="3"
             Grid.Row="11"
@@ -197,7 +196,7 @@
             VerticalAlignment="center"
             HorizontalAlignment="Left"
             Padding="50 5 0 0"
-            Visibility="visible"
+            Visibility="Visible"
             />
 
         <!--Textboxes-->
@@ -227,7 +226,7 @@
             Background="MintCream"
             />
         <TextBox
-            Name="txtDocument"
+            Name="txtItem"
             Grid.Column="3"
             Grid.Row="10"
             Grid.ColumnSpan="2"
@@ -244,14 +243,15 @@
             Height="25"
             VerticalContentAlignment="Center"
             Background="MintCream"
-            Visibility="visible"
+            Visibility="Visible"
             />
 
         <!--Listboxes-->
         <ListBox
+            Name="lstPackingList"
             Grid.Column="2"
             Grid.Row="10"
-            Grid.RowSpan="2"
+            Grid.RowSpan="3"
             />
 
 
@@ -262,7 +262,7 @@
             Grid.Row="4"
             Height="30"
             VerticalContentAlignment="Center"
-            Background="MintCream"
+            Background="MintCream" SelectionChanged="cbCountry_SelectionChanged"
             />
         <ComboBox
             Name="cbTypeOfTravel"
@@ -314,7 +314,9 @@
             VerticalContentAlignment="Center"
             VerticalAlignment="Top"
             HorizontalAlignment="left"
-            Margin="50 5 0 0"
+            Margin="50 5 0 0" 
+            Checked="cxTravelDocument_Checked"
+            Unchecked="cxTravelDocument_Unchecked"
             />
         <CheckBox
             Name="cxTravelDocumentRequired"
@@ -323,6 +325,7 @@
             Grid.Row="11"
             Grid.ColumnSpan="2"
             FontSize="13"
+            Height="30"
             VerticalContentAlignment="center"
             HorizontalAlignment="Left"
             Margin="50 5 0 0"
@@ -334,7 +337,7 @@
             Name="btnAdd"
             Content="Add travel"
             Grid.Column="2"
-            Grid.Row="14"
+            Grid.Row="13"
             Height="45"
             Width="100"
             FontSize="13"
@@ -344,7 +347,7 @@
             Name="btnReturn"
             Content="Return"
             Grid.Column="4"
-            Grid.Row="1"
+            Grid.Row="4"
             Height="30"
             VerticalAlignment="Top"
             HorizontalAlignment="Right"
@@ -365,7 +368,7 @@
             Width="70"
             FontSize="13"
             VerticalAlignment="center"
-            Background="DarkTurquoise" Click="btnAdd_Click"
+            Background="DarkTurquoise" Click="btnAddItemToPackingList_Click"
             />
     </Grid>
 </Window>

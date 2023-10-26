@@ -16,8 +16,11 @@ namespace TravelPal.Managers
         public static void AddTravel(Travel travel)
         {
             Travels.Add(travel);
-            User signedInCustomer = (User)UserManager.SignedInUser;
-            signedInCustomer.Travels.Add(travel);
+            if (UserManager.SignedInUser.GetType() == typeof(User))
+            {
+                User signedInCustomer = (User)UserManager.SignedInUser;
+                signedInCustomer.Travels.Add(travel);
+            }
         }
         public static void RemoveTravel(Travel travelToRemove)
         {
@@ -55,6 +58,33 @@ namespace TravelPal.Managers
         public static int GetId()
         {
             return TravelId += 1;
+        }
+
+        public static IPackingListItem AddDefaultPackingListItem(Country departureCountry, Country arrivalCountry)
+        {
+            bool isDepartureCountryEuropean = CheckIfCountryIsEuropean(departureCountry);
+            bool isArrivalCountryEuropean = CheckIfCountryIsEuropean(arrivalCountry);
+
+            if (!isDepartureCountryEuropean || isDepartureCountryEuropean && !isArrivalCountryEuropean)
+            {
+                return new TravelDocument("Passport", true);
+            }
+            else
+            {
+                return new TravelDocument("Passport", false);
+            }
+        }
+
+        public static bool CheckIfCountryIsEuropean(Country country)
+        {
+            foreach (Enum europeanCountry in Enum.GetValues(typeof(EuropeanCountry)))
+            {
+                if (country.ToString() == europeanCountry.ToString())
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

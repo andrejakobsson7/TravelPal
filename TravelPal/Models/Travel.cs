@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TravelPal.Managers;
 
 namespace TravelPal.Models
@@ -12,6 +13,7 @@ namespace TravelPal.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int TravelDays { get; }
+        public List<IPackingListItem> PackingList { get; set; }
 
         public Travel(string destination, Country country, int travellers, DateTime startDate, DateTime endDate)
         {
@@ -22,6 +24,17 @@ namespace TravelPal.Models
             EndDate = endDate;
             TravelDays = CalculateTravelDays(startDate, endDate);
             Id = TravelManager.GetId();
+        }
+        public Travel(string destination, Country country, int travellers, DateTime startDate, DateTime endDate, List<IPackingListItem> packingList)
+        {
+            Destination = destination;
+            Country = country;
+            Travellers = travellers;
+            StartDate = startDate;
+            EndDate = endDate;
+            TravelDays = CalculateTravelDays(startDate, endDate);
+            Id = TravelManager.GetId();
+            PackingList = packingList;
         }
 
         private int CalculateTravelDays(DateTime startDate, DateTime endDate)
