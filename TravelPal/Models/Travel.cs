@@ -27,13 +27,13 @@ namespace TravelPal.Models
         }
         public Travel(string destination, Country country, int travellers, DateTime startDate, DateTime endDate, List<IPackingListItem> packingList)
         {
+            Id = TravelManager.GetId();
             Destination = destination;
             Country = country;
             Travellers = travellers;
             StartDate = startDate;
             EndDate = endDate;
             TravelDays = CalculateTravelDays(startDate, endDate);
-            Id = TravelManager.GetId();
             PackingList = packingList;
         }
 

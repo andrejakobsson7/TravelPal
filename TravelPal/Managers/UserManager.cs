@@ -23,8 +23,9 @@ namespace TravelPal.Managers
             new Admin("admin", "password", Country.USA)
         };
 
-        public static IUser SignedInUser { get; set; }
+        public static IUser? SignedInUser { get; set; }
 
+        //Methods for validating username and password when registering as a new customer.
         public static bool ValidateUsername(string username)
         {
             if (string.IsNullOrEmpty(username))
@@ -35,7 +36,7 @@ namespace TravelPal.Managers
             return CheckIfUsernameExists(username);
         }
 
-        public static bool CheckIfUsernameExists(string username)
+        private static bool CheckIfUsernameExists(string username)
         {
             foreach (IUser user in Users)
             {
@@ -57,25 +58,14 @@ namespace TravelPal.Managers
             }
             return true;
         }
-        public static bool CreateAndAddUser(string username, string password, Country location)
+        public static IUser RegisterUser(string username, string password, Country country)
         {
-            User newUser = new(username, password, location);
-            return AddUser(newUser);
+            User newUser = new(username, password, country);
+            Users.Add(newUser);
+            return newUser;
         }
 
-        private static bool AddUser(IUser user)
-        {
-            try
-            {
-                Users.Add(user);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
+        //Method used when signing in from MainWindow.
         public static bool SignIn(string username, string password)
         {
             foreach (IUser user in Users)

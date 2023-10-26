@@ -16,13 +16,6 @@ namespace TravelPal.Models
             Location = location;
             Travels = new List<Travel>();
         }
-        public User(string username, string password, Country location, List<Travel> travels)
-        {
-            Username = username;
-            Password = password;
-            Location = location;
-            Travels = travels;
-        }
         public User()
         {
 

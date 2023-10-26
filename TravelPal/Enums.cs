@@ -48,9 +48,4 @@
         Vacation,
         WorkTrip
     }
-    public enum DocumentType
-    {
-        TravelDocument,
-        OtherDocument
-    }
 }

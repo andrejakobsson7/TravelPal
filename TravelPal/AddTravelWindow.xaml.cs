@@ -15,15 +15,7 @@ namespace TravelPal
         public AddTravelWindow()
         {
             InitializeComponent();
-            //Ladda comboboxar med alternativ
-            foreach (Enum country in Enum.GetValues(typeof(Country)))
-            {
-                cbCountry.Items.Add(country);
-            }
-            foreach (Enum travelType in Enum.GetValues(typeof(TravelType)))
-            {
-                cbTypeOfTravel.Items.Add(travelType);
-            }
+            FillComboBoxes();
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
@@ -36,6 +28,7 @@ namespace TravelPal
 
         private void cbTypeOfTravel_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
+            //Börja med att återställa till "default-läge" för att ha höjd för om man togglar.
             lblWorkTripOrVacation.Content = "";
             cxAllInclusive.Visibility = Visibility.Hidden;
             txtMeetingDetails.Visibility = Visibility.Hidden;
@@ -80,6 +73,8 @@ namespace TravelPal
                 }
             }
         }
+        //Nedanstående metod används både för att validera så att man skrivit in något i fältet "Destination" och "Item" när man lägger till i sin packningslista,
+        //därav skickar man med vilken knapp man kommer från till metoden, så att vi kan displaya ett bra felmeddelande.
         private bool ValidateStringInput(string input, object sender)
         {
             Button btn = (Button)sender;
@@ -102,10 +97,14 @@ namespace TravelPal
                 return true;
             }
         }
+
+        //Nedanstående metod används både för att validera att man valt något i combobox 1 (Land) och combobox 2 (resetyp).
+        //För att kunna ha metoden gemensam behöver man skicka med vilken combobox man kommer från och på så vis kan vi hantera felen på rätt sätt och slussa vidare till nästa kontrollstation.
         private bool ValidateSelectedItemInComboBox(object value, ComboBox selectedCombobox)
         {
             if (value == null)
             {
+                //Felmeddelandet är generiskt och hämtar typnamnet för första enum i listan som comboboxen avser och displayar i felmeddelandet.
                 MessageBox.Show($"No {selectedCombobox.Items[0].GetType().Name} has been selected");
                 return false;
             }
@@ -122,28 +121,28 @@ namespace TravelPal
                 int travellers = int.Parse(input);
                 if (travellers <= 0)
                 {
-                    throw new ArgumentException("Number of travellers must be at least 1");
+                    throw new ArgumentOutOfRangeException("Number of travellers must be at least 1");
                 }
             }
-            catch (FormatException e)
+            catch (FormatException)
+            {
+                MessageBox.Show($"{input} is not a valid number of travellers");
+                return false;
+            }
+            catch (OverflowException)
+            {
+                MessageBox.Show($"{input} is a too large or small number of travellers");
+                return false;
+            }
+            catch (ArgumentOutOfRangeException e)
             {
                 MessageBox.Show(e.Message);
                 return false;
             }
-            catch (OverflowException e)
-            {
-                MessageBox.Show(e.Message);
-                return false;
-            }
-            catch (ArgumentException e)
-            {
-                MessageBox.Show(e.Message);
-                return false;
-            }
-            return ValidateSelectedDatesInDatePickers(dpStartDate.SelectedDate!, dpEndDate.SelectedDate!);
+            return ValidateSelectedDatesInDatePickers(dpStartDate.SelectedDate, dpEndDate.SelectedDate);
         }
 
-        private bool ValidateSelectedDatesInDatePickers(object startDate, object endDate)
+        private bool ValidateSelectedDatesInDatePickers(object? startDate, object? endDate)
         {
             if (startDate == null)
             {
@@ -161,7 +160,7 @@ namespace TravelPal
         {
             if (startDate > endDate)
             {
-                MessageBox.Show("End date must come after start date");
+                MessageBox.Show("End date be after start date");
                 return false;
             }
             else if (startDate < DateTime.Today)
@@ -200,6 +199,28 @@ namespace TravelPal
             lstPackingList.Items.Clear();
             UpdatePackingSection();
         }
+        private void UpdatePackingSection()
+        {
+            txtItem.Text = "";
+            cxTravelDocument.IsChecked = false;
+            cxTravelDocumentRequired.Visibility = Visibility.Hidden;
+            cxTravelDocumentRequired.IsChecked = false;
+            lblQuantity.Visibility = Visibility.Visible;
+            txtQuantity.Visibility = Visibility.Visible;
+            txtQuantity.Text = "";
+        }
+
+        private void FillComboBoxes()
+        {
+            foreach (Enum country in Enum.GetValues(typeof(Country)))
+            {
+                cbCountry.Items.Add(country);
+            }
+            foreach (Enum travelType in Enum.GetValues(typeof(TravelType)))
+            {
+                cbTypeOfTravel.Items.Add(travelType);
+            }
+        }
 
         private bool ValidateQuantityInput(string input)
         {
@@ -211,14 +232,14 @@ namespace TravelPal
                     throw new ArgumentException("Quantity must be at least 1");
                 }
             }
-            catch (FormatException e)
+            catch (FormatException)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show($"{input} is not a valid quantity");
                 return false;
             }
-            catch (OverflowException e)
+            catch (OverflowException)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show($"{input} is a too large or small quantity");
                 return false;
             }
             catch (ArgumentException e)
@@ -231,9 +252,6 @@ namespace TravelPal
 
         private void btnAddItemToPackingList_Click(object sender, RoutedEventArgs e)
         {
-            //Läs inputfälten
-
-            //Om det är checkat i att det är ett travel document, försöker vi skapa ett travel document.
             bool isValidItem = ValidateStringInput(txtItem.Text, (Button)sender);
             if (isValidItem)
             {
@@ -291,23 +309,13 @@ namespace TravelPal
             }
             return userPackingList;
         }
-        private void UpdatePackingSection()
-        {
-            txtItem.Text = "";
-            cxTravelDocument.IsChecked = false;
-            cxTravelDocumentRequired.Visibility = Visibility.Hidden;
-            cxTravelDocumentRequired.IsChecked = false;
-            lblQuantity.Visibility = Visibility.Visible;
-            txtQuantity.Visibility = Visibility.Visible;
-            txtQuantity.Text = "";
-        }
 
         private void cbCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbCountry.SelectedIndex >= 0)
             {
                 lstPackingList.Items.Clear();
-                IPackingListItem defaultItem = TravelManager.AddDefaultPackingListItem(UserManager.SignedInUser.Location, (Country)cbCountry.SelectedItem);
+                IPackingListItem defaultItem = TravelManager.AddDefaultPackingListItem(UserManager.SignedInUser!.Location, (Country)cbCountry.SelectedItem);
                 ListBoxItem item = new();
                 item.Tag = defaultItem;
                 item.Content = defaultItem.GetInfo();

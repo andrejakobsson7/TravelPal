@@ -13,7 +13,7 @@ namespace TravelPal
         public TravelsWindow()
         {
             InitializeComponent();
-            lblWelcomeUser.Content = $"Welcome {UserManager.SignedInUser.Username}";
+            lblWelcomeUser.Content = $"Welcome {UserManager.SignedInUser!.Username}";
             UpdateUi();
         }
 
@@ -83,7 +83,7 @@ namespace TravelPal
         private void UpdateUi()
         {
             lstTravels.Items.Clear();
-            if (UserManager.SignedInUser.GetType() == typeof(User))
+            if (UserManager.SignedInUser!.GetType() == typeof(User))
             {
                 User loggedInUser = (User)UserManager.SignedInUser;
                 foreach (Travel travel in loggedInUser.Travels)

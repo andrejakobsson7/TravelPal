@@ -16,7 +16,7 @@ namespace TravelPal.Managers
         public static void AddTravel(Travel travel)
         {
             Travels.Add(travel);
-            if (UserManager.SignedInUser.GetType() == typeof(User))
+            if (UserManager.SignedInUser!.GetType() == typeof(User))
             {
                 User signedInCustomer = (User)UserManager.SignedInUser;
                 signedInCustomer.Travels.Add(travel);
@@ -25,34 +25,14 @@ namespace TravelPal.Managers
         public static void RemoveTravel(Travel travelToRemove)
         {
             Travels.Remove(travelToRemove);
-            if (UserManager.SignedInUser.GetType() == typeof(User))
+            if (UserManager.SignedInUser!.GetType() == typeof(User))
             {
                 User signedInCustomer = (User)UserManager.SignedInUser;
                 signedInCustomer.Travels.Remove(travelToRemove);
             }
             else if (UserManager.SignedInUser.GetType() == typeof(Admin))
             {
-                //Hitta resan med hjälp av ID-numret.
-                //Gå igenom alla users listor med resor och leta efter ID-numret och ta bort det när det hittas, så att det både tas bort från 'databasen',
-                //d.v.s. den statiska listan i denna klassen OCH användarens egna lista.
-                bool hasFoundTravelId = false;
-                foreach (IUser user in UserManager.Users)
-                {
-                    while (!hasFoundTravelId)
-                    {
-                        if (user.GetType() == typeof(User))
-                        {
-                            User userToCheck = (User)user;
-                            for (int i = 0; i < userToCheck.Travels.Count; i++)
-                                if (userToCheck.Travels[i].Id == travelToRemove.Id)
-                                {
-                                    userToCheck.Travels.RemoveAt(i);
-                                    hasFoundTravelId = true;
-                                    break;
-                                }
-                        }
-                    }
-                }
+                RemoveFromUserTravelList(travelToRemove);
             }
         }
         public static int GetId()
@@ -85,6 +65,32 @@ namespace TravelPal.Managers
                 }
             }
             return false;
+        }
+        private static void RemoveFromUserTravelList(Travel travelToRemove)
+        {
+            //Denna snurra gör följande:
+            //Går igenom användare för användare i 'databasen' (statiska listan i denna klass)
+            //Om användaren är av typen "User", så går vi vidare och kollar igenom resorna denna user har i sin lista.
+            //Vi jämför ID-numret för varje resa i userns lista mot ID-numret för den resa som skall tas bort.
+            //Om ID-numret stämmer överens, tar vi bort den från användarens lista.
+            bool hasFoundTravelId = false;
+            foreach (IUser user in UserManager.Users)
+            {
+                while (!hasFoundTravelId)
+                {
+                    if (user.GetType() == typeof(User))
+                    {
+                        User userToCheck = (User)user;
+                        for (int i = 0; i < userToCheck.Travels.Count; i++)
+                            if (userToCheck.Travels[i].Id == travelToRemove.Id)
+                            {
+                                userToCheck.Travels.RemoveAt(i);
+                                hasFoundTravelId = true;
+                                break;
+                            }
+                    }
+                }
+            }
         }
     }
 }
