@@ -51,6 +51,22 @@ namespace TravelPal.Models
             PackingList = new List<IPackingListItem>();
             TravelManager.TravelId += 1;
         }
+        public Travel(string destination, Country country, int travellers, DateTime startDate, DateTime endDate, int id, List<IPackingListItem> packingList)
+        {
+            Id = id;
+            Destination = destination;
+            Country = country;
+            Travellers = travellers;
+            StartDate = startDate;
+            EndDate = endDate;
+            TravelDays = CalculateTravelDays(startDate, endDate);
+            PackingList = packingList;
+            TravelManager.TravelId += 1;
+        }
+        public Travel()
+        {
+
+        }
 
         private int CalculateTravelDays(DateTime startDate, DateTime endDate)
         {

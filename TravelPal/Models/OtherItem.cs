@@ -10,6 +10,10 @@
             Name = name;
             Quantity = quantity;
         }
+        public OtherItem()
+        {
+
+        }
 
         public string GetInfo()
         {

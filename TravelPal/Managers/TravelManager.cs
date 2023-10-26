@@ -9,8 +9,40 @@ namespace TravelPal.Managers
         public static int TravelId;
         public static List<Travel> Travels { get; set; } = new()
         {
-            new Vacation(true, "New York", Country.USA, 2, DateTime.Today, DateTime.Today.AddDays(3), 1),
-            new WorkTrip("Internal discussions", "Stockholm", Country.Sweden, 1, DateTime.Today, DateTime.Today.AddDays(2), 2)
+            new Vacation
+            {
+                AllInclusive = true,
+                Destination = "New York",
+                Country = Country.USA,
+                Travellers = 2,
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddDays(3),
+                Id = 1,
+                PackingList = new List<IPackingListItem>
+                {
+                    new TravelDocument
+                    {
+                        Name = "Passport", Required = true
+                    }
+                }
+            },
+            new WorkTrip
+            {
+                MeetingDetails = "Internal discussions",
+                Destination = "Stockholm",
+                Country = Country.Sweden,
+                Travellers = 1,
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddDays(2),
+                Id = 2,
+                PackingList = new List<IPackingListItem>
+                {
+                    new OtherItem
+                    {
+                        Name = "Computer", Quantity = 1
+                    }
+                }
+            }
         };
 
         public static void AddTravel(Travel travel)
@@ -66,31 +98,27 @@ namespace TravelPal.Managers
             }
             return false;
         }
-        private static void RemoveFromUserTravelList(Travel travelToRemove)
+        private static bool RemoveFromUserTravelList(Travel travelToRemove)
         {
             //Denna snurra gör följande:
             //Går igenom användare för användare i 'databasen' (statiska listan i denna klass)
             //Om användaren är av typen "User", så går vi vidare och kollar igenom resorna denna user har i sin lista.
             //Vi jämför ID-numret för varje resa i userns lista mot ID-numret för den resa som skall tas bort.
             //Om ID-numret stämmer överens, tar vi bort den från användarens lista.
-            bool hasFoundTravelId = false;
             foreach (IUser user in UserManager.Users)
             {
-                while (!hasFoundTravelId)
+                if (user.GetType() == typeof(User))
                 {
-                    if (user.GetType() == typeof(User))
-                    {
-                        User userToCheck = (User)user;
-                        for (int i = 0; i < userToCheck.Travels.Count; i++)
-                            if (userToCheck.Travels[i].Id == travelToRemove.Id)
-                            {
-                                userToCheck.Travels.RemoveAt(i);
-                                hasFoundTravelId = true;
-                                break;
-                            }
-                    }
+                    User userToCheck = (User)user;
+                    for (int i = 0; i < userToCheck.Travels.Count; i++)
+                        if (userToCheck.Travels[i].Id == travelToRemove.Id)
+                        {
+                            userToCheck.Travels.RemoveAt(i);
+                            return true;
+                        }
                 }
             }
+            return false;
         }
     }
 }

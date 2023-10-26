@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using TravelPal.Models;
 
@@ -9,18 +8,19 @@ namespace TravelPal.Managers
     {
         public static List<IUser> Users { get; set; } = new()
         {
+            new Admin("admin", "password", Country.USA),
             new User
             {
                 Username = "user",
                 Password = "password",
                 Location = Country.Sweden,
+                //This ensures that the user has the same travels that are registered as "default-travels" in TravelManager.
                 Travels = new List<Travel>
                 {
-                    new Vacation(true, "New York", Country.USA, 2, DateTime.Today, DateTime.Today.AddDays(3), 1),
-                    new WorkTrip("Internal discussions", "Stockholm", Country.Sweden, 1, DateTime.Today, DateTime.Today.AddDays(2), 2)
+                    TravelManager.Travels[0],
+                    TravelManager.Travels[1]
                 }
-            },
-            new Admin("admin", "password", Country.USA)
+            }
         };
 
         public static IUser? SignedInUser { get; set; }

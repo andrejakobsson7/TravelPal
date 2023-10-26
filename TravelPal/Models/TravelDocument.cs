@@ -11,6 +11,10 @@
             Name = name;
             Required = required;
         }
+        public TravelDocument()
+        {
+
+        }
 
         public string GetInfo()
         {
