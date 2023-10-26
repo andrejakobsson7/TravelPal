@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelPal"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="MediumSlateBlue" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="MainWindow" Height="400" Width="700" Background="MintCream" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -17,7 +17,6 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -36,7 +35,7 @@
             FontSize="30"
             FontFamily="Arial"
             FontWeight="Bold"
-            Foreground="MintCream"
+            Foreground="MediumSlateBlue"
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
             />
@@ -86,7 +85,6 @@
             Grid.Row="2"
             Height="30"
             VerticalContentAlignment="Center"
-            Background="MintCream"
             Margin="0 0 5 0"
             />
         
@@ -97,7 +95,6 @@
             Grid.Row="3"
             Height="30"
             VerticalContentAlignment="Center"
-            Background="MintCream"
             Margin="0 0 5 0"
             />
         <!--Buttons-->
@@ -110,7 +107,8 @@
             Height="45"
             Width="100"
             FontSize="15"
-            Background="DarkTurquoise" Click="btnSignIn_Click"
+            Foreground="MintCream"
+            Background="MediumSlateBlue" Click="btnSignIn_Click"
             />
         <Button
             Name="btnRegister"

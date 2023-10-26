@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelPal"
         mc:Ignorable="d"
-        Title="TravelsWindow" Height="450" Width="800" Background="MediumSlateBlue" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="TravelsWindow" Height="450" Width="700" Background="MintCream" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -35,7 +35,7 @@
             FontSize="30"
             FontFamily="Arial"
             FontWeight="Bold"
-            Foreground="MintCream"
+            Foreground="MediumSlateBlue"
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
             />
@@ -83,7 +83,6 @@
             Grid.Row="3"
             Grid.ColumnSpan="2"
             Margin="0 5"
-            Background="MintCream"
             />
 
         <!--Buttons-->
@@ -96,7 +95,7 @@
             Width="100"
             HorizontalAlignment="Left"
             FontSize="13"
-            Background="DarkTurquoise" Click="btnAdd_Click"
+            Background="MediumSlateBlue" Click="btnAdd_Click"
             />
         <Button
             Name="btnDetails"
@@ -129,9 +128,9 @@
             Height="35"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
-            FontSize="15"
+            FontSize="14"
             Background="Transparent"
-            Foreground="MintCream"
+            Foreground="MediumSlateBlue"
             BorderBrush="Transparent"
             Margin="0 0 5 0" Click="btnInfo_Click"
             />
@@ -141,9 +140,9 @@
             Grid.Column="4"
             Grid.Row="1"
             Height="30"
-            VerticalAlignment="Top"
+            VerticalAlignment="Center"
             HorizontalAlignment="Right"
-            FontSize="15"
+            FontSize="14"
             Background="Transparent"
             BorderBrush="Transparent"
             Foreground="DarkOrange"

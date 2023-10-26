@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using TravelPal.Models;
 
 namespace TravelPal
@@ -20,6 +21,7 @@ namespace TravelPal
             txtEndDate.Text = DateOnly.FromDateTime(travelToDisplay.EndDate).ToString();
             txtTravelDays.Text = travelToDisplay.TravelDays.ToString();
             txtTypeOfTravel.Text = travelToDisplay.GetType().Name.ToString();
+            AddItemsToPackingList(travelToDisplay);
             if (travelToDisplay.GetType() == typeof(Vacation))
             {
                 Vacation selectedVacation = (Vacation)travelToDisplay;
@@ -46,6 +48,18 @@ namespace TravelPal
             travelsWindow.Show();
 
             Close();
+        }
+
+        private void AddItemsToPackingList(Travel travel)
+        {
+            foreach (IPackingListItem packItem in travel.PackingList)
+            {
+                ListBoxItem item = new();
+                item.Tag = packItem;
+                item.Content = packItem.GetInfo();
+                lstPackingList.Items.Add(item);
+
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelPal"
         mc:Ignorable="d"
-        Title="RegisterWindow" Height="450" Width="800" Background="MediumSlateBlue" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="RegisterWindow" Height="400" Width="700" Background="MintCream" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -36,7 +36,7 @@
             FontSize="30"
             FontFamily="Arial"
             FontWeight="Bold"
-            Foreground="MintCream"
+            Foreground="MediumSlateBlue"
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
             />
@@ -77,7 +77,7 @@
             Padding="0"
             />
         <Label
-            Content="Location"
+            Content="Country"
             Grid.Column="2"
             Grid.Row="5"
             FontSize="15"
@@ -96,7 +96,6 @@
             Grid.Row="3"
             Height="30"
             VerticalContentAlignment="Center"
-            Background="MintCream"
             Margin="0 0 5 0"
             />
 
@@ -107,18 +106,16 @@
             Grid.Row="4"
             Height="30"
             VerticalContentAlignment="Center"
-            Background="MintCream"
             Margin="0 0 5 0"
             />
         
         <!--Comboboxes-->
         <ComboBox
-            Name="cbLocation"
+            Name="cbCountry"
             Grid.Column="3"
             Grid.Row="5"
             Height="30"
             VerticalContentAlignment="Center"
-            Background="MintCream"
             BorderBrush="Black"
             Margin="0 0 5 0"
             />
@@ -133,7 +130,8 @@
             Height="45"
             Width="100"
             FontSize="15"
-            Background="DarkTurquoise" Click="btnRegister_Click"
+            Foreground="MintCream"
+            Background="MediumSlateBlue" Click="btnRegister_Click"
             />
 
         <Button
@@ -142,13 +140,13 @@
             Grid.Column="4"
             Grid.Row="1"
             Height="30"
-            VerticalAlignment="Top"
+            VerticalAlignment="Center"
             HorizontalAlignment="Right"
             FontSize="15"
             Background="Transparent"
             BorderBrush="Transparent"
             Foreground="DarkOrange"
-            Margin="0 0 5 0" Click="btnReturn_Click"
+            Click="btnReturn_Click"
             />
 
     </Grid>

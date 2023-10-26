@@ -16,7 +16,7 @@ namespace TravelPal
 
             foreach (Enum country in Enum.GetValues(typeof(Country)))
             {
-                cbLocation.Items.Add(country);
+                cbCountry.Items.Add(country);
             }
         }
 
@@ -31,7 +31,7 @@ namespace TravelPal
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             //Läs och validera input
-            if (cbLocation.SelectedIndex < 0)
+            if (cbCountry.SelectedIndex < 0)
             {
                 MessageBox.Show("No location has been selected", "Error");
             }
@@ -41,7 +41,7 @@ namespace TravelPal
                 bool isValidPassword = UserManager.ValidatePassword(pbPassword.Password);
                 if (isValidUsername && isValidPassword)
                 {
-                    bool isSuccessfullyRegistered = UserManager.CreateAndAddUser(txtUsername.Text, pbPassword.Password, (Country)cbLocation.SelectedItem);
+                    bool isSuccessfullyRegistered = UserManager.CreateAndAddUser(txtUsername.Text, pbPassword.Password, (Country)cbCountry.SelectedItem);
                     if (isSuccessfullyRegistered)
                     {
                         MessageBoxResult answer = MessageBox.Show($"User has been successfully registered! Click 'OK' to go back to login page", "Confirmation", MessageBoxButton.OKCancel);

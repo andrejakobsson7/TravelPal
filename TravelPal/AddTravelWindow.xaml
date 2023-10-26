@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelPal"
         mc:Ignorable="d"
-        Title="AddTravelWindow" Height="700" Width="750" Background="MediumSlateBlue" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="AddTravelWindow" Height="700" Width="750" Background="MintCream" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -41,7 +41,7 @@
             FontSize="30"
             FontFamily="Arial"
             FontWeight="Bold"
-            Foreground="MintCream"
+            Foreground="MediumSlateBlue"
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
             />
@@ -154,7 +154,7 @@
             Foreground="black"
             VerticalAlignment="Center"
             HorizontalAlignment="Left"
-            Padding="0"
+            Padding="5 0"
             />
         <Label
             Content="Add new item to packing list"
@@ -206,7 +206,6 @@
             Grid.Row="3"
             Height="30"
             VerticalContentAlignment="Center"
-            Background="MintCream"
             />
         <TextBox
             Name="txtTravellers"
@@ -216,7 +215,6 @@
             Width="125"
             VerticalContentAlignment="Center"
             HorizontalAlignment="Left"
-            Background="MintCream"
             />
         <TextBox
             Name="txtMeetingDetails"
@@ -225,7 +223,6 @@
             Height="30"
             Visibility="Hidden"
             VerticalContentAlignment="Center"
-            Background="MintCream"
             />
         <TextBox
             Name="txtItem"
@@ -235,7 +232,6 @@
             Height="25"
             VerticalContentAlignment="Center"
             VerticalAlignment="Bottom"
-            Background="MintCream"
             Margin="50 0 0 0"
             />
         <TextBox
@@ -245,7 +241,6 @@
             Height="25"
             VerticalContentAlignment="Center"
             VerticalAlignment="center"
-            Background="MintCream"
             Visibility="Visible"
             Margin="0 10 0 0"
             />
@@ -267,7 +262,7 @@
             Grid.Row="4"
             Height="30"
             VerticalContentAlignment="Center"
-            Background="MintCream" SelectionChanged="cbCountry_SelectionChanged"
+            SelectionChanged="cbCountry_SelectionChanged"
             />
         <ComboBox
             Name="cbTypeOfTravel"
@@ -275,7 +270,7 @@
             Grid.Row="8"
             Height="30"
             VerticalContentAlignment="Center"
-            Background="MintCream" SelectionChanged="cbTypeOfTravel_SelectionChanged"
+            SelectionChanged="cbTypeOfTravel_SelectionChanged"
             />
         
         <!--Datepickers-->
@@ -353,15 +348,15 @@
             Height="45"
             Width="120"
             FontSize="13"
-            Background="DarkTurquoise" Click="btnAdd_Click"
+            Background="MediumSlateBlue" Click="btnAdd_Click"
             />
         <Button
             Name="btnReturn"
-            Content="Return"
+            Content="Return to overview"
             Grid.Column="5"
             Grid.Row="1"
             Height="30"
-            VerticalAlignment="Top"
+            VerticalAlignment="center"
             HorizontalAlignment="Right"
             FontSize="15"
             Background="Transparent"
@@ -378,8 +373,8 @@
             Height="30"
             Width="70"
             FontSize="13"
-            VerticalAlignment="tOP"
-            Background="DarkTurquoise" Click="btnAddItemToPackingList_Click"
+            VerticalAlignment="Top"
+            Background="Yellow" Click="btnAddItemToPackingList_Click"
             Margin="0 5"
             />
     </Grid>
