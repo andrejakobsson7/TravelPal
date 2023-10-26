@@ -9,11 +9,17 @@ namespace TravelPal.Managers
     {
         public static List<IUser> Users { get; set; } = new()
         {
-            new User("user", "password", Country.Sweden, new List<Travel>
+            new User
             {
-                new Vacation(true, "New York", Country.USA, 2, DateTime.Today, DateTime.Today.AddDays(3)),
-                new WorkTrip("Internal discussions", "Stockholm", Country.Sweden, 1, DateTime.Today, DateTime.Today.AddDays(2))
-            }),
+                Username = "user",
+                Password = "password",
+                Location = Country.Sweden,
+                Travels = new List<Travel>
+                {
+                    new Vacation(true, "New York", Country.USA, 2, DateTime.Today, DateTime.Today.AddDays(3), 1),
+                    new WorkTrip("Internal discussions", "Stockholm", Country.Sweden, 1, DateTime.Today, DateTime.Today.AddDays(2), 2)
+                }
+            },
             new Admin("admin", "password", Country.USA)
         };
 

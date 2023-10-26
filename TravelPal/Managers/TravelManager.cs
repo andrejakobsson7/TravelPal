@@ -9,8 +9,8 @@ namespace TravelPal.Managers
         public static int TravelId;
         public static List<Travel> Travels { get; set; } = new()
         {
-            new Vacation(true, "New York", Country.USA, 2, DateTime.Today, DateTime.Today.AddDays(3)),
-            new WorkTrip("Internal discussions", "Stockholm", Country.Sweden, 1, DateTime.Today, DateTime.Today.AddDays(2))
+            new Vacation(true, "New York", Country.USA, 2, DateTime.Today, DateTime.Today.AddDays(3), 1),
+            new WorkTrip("Internal discussions", "Stockholm", Country.Sweden, 1, DateTime.Today, DateTime.Today.AddDays(2), 2)
         };
 
         public static void AddTravel(Travel travel)
@@ -34,7 +34,7 @@ namespace TravelPal.Managers
             {
                 //Hitta resan med hjälp av ID-numret.
                 //Gå igenom alla users listor med resor och leta efter ID-numret och ta bort det när det hittas, så att det både tas bort från 'databasen',
-                //d.v.s. den statiska listan i denna klassen och användarens egna lista.
+                //d.v.s. den statiska listan i denna klassen OCH användarens egna lista.
                 bool hasFoundTravelId = false;
                 foreach (IUser user in UserManager.Users)
                 {

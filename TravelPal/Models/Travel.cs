@@ -17,13 +17,13 @@ namespace TravelPal.Models
 
         public Travel(string destination, Country country, int travellers, DateTime startDate, DateTime endDate)
         {
+            Id = TravelManager.GetId();
             Destination = destination;
             Country = country;
             Travellers = travellers;
             StartDate = startDate;
             EndDate = endDate;
             TravelDays = CalculateTravelDays(startDate, endDate);
-            Id = TravelManager.GetId();
         }
         public Travel(string destination, Country country, int travellers, DateTime startDate, DateTime endDate, List<IPackingListItem> packingList)
         {
@@ -35,6 +35,21 @@ namespace TravelPal.Models
             TravelDays = CalculateTravelDays(startDate, endDate);
             Id = TravelManager.GetId();
             PackingList = packingList;
+        }
+
+        //Konstruktorn nedanför används när vi lägger upp resor manuellt. Då lägger vi in ID-nummer själv,
+        //men ökar ändå på TravelId med ett så att när man lägger till en resa "den vanliga vägen" så kan man inte få samma ID-nr.
+        public Travel(string destination, Country country, int travellers, DateTime startDate, DateTime endDate, int id)
+        {
+            Id = id;
+            Destination = destination;
+            Country = country;
+            Travellers = travellers;
+            StartDate = startDate;
+            EndDate = endDate;
+            TravelDays = CalculateTravelDays(startDate, endDate);
+            PackingList = new List<IPackingListItem>();
+            TravelManager.TravelId += 1;
         }
 
         private int CalculateTravelDays(DateTime startDate, DateTime endDate)

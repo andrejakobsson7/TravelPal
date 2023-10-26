@@ -23,5 +23,9 @@ namespace TravelPal.Models
             Location = location;
             Travels = travels;
         }
+        public User()
+        {
+
+        }
     }
 }
