@@ -12,7 +12,7 @@ namespace TravelPal.Models
         public int Travellers { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int TravelDays { get; }
+        public int TravelDays { get { return CalculateTravelDays(StartDate, EndDate); } }
         public List<IPackingListItem> PackingList { get; set; }
         public Travel(string destination, Country country, int travellers, DateTime startDate, DateTime endDate, List<IPackingListItem> packingList)
         {
@@ -22,7 +22,6 @@ namespace TravelPal.Models
             Travellers = travellers;
             StartDate = startDate;
             EndDate = endDate;
-            TravelDays = CalculateTravelDays(startDate, endDate);
             PackingList = packingList;
         }
         public Travel()

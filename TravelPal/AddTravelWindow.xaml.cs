@@ -56,7 +56,7 @@ namespace TravelPal
                 TravelManager.ValidateSelectedDatesInDatePickers(dpStartDate.SelectedDate, dpEndDate.SelectedDate) &&
                 TravelManager.ValidateSelectedItemInComboBox(cbTypeOfTravel.SelectedItem, cbTypeOfTravel))
             {
-                List<IPackingListItem> userPackingList = GetPackingList();
+                List<IPackingListItem> userPackingList = TravelManager.GetPackingList(lstPackingList);
                 TravelType selectedTravelType = (TravelType)cbTypeOfTravel.SelectedItem;
                 if (selectedTravelType == TravelType.Vacation)
                 {
@@ -247,33 +247,33 @@ namespace TravelPal
             }
         }
 
-        private bool ValidateQuantityInput(string input)
-        {
-            try
-            {
-                int quantity = int.Parse(input);
-                if (quantity <= 0)
-                {
-                    throw new ArgumentException("Quantity must be at least 1");
-                }
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show($"{input} is not a valid quantity");
-                return false;
-            }
-            catch (OverflowException)
-            {
-                MessageBox.Show($"{input} is a too large or small quantity");
-                return false;
-            }
-            catch (ArgumentException e)
-            {
-                MessageBox.Show(e.Message);
-                return false;
-            }
-            return true;
-        }
+        //private bool ValidateQuantityInput(string input)
+        //{
+        //    try
+        //    {
+        //        int quantity = int.Parse(input);
+        //        if (quantity <= 0)
+        //        {
+        //            throw new ArgumentException("Quantity must be at least 1");
+        //        }
+        //    }
+        //    catch (FormatException)
+        //    {
+        //        MessageBox.Show($"{input} is not a valid quantity");
+        //        return false;
+        //    }
+        //    catch (OverflowException)
+        //    {
+        //        MessageBox.Show($"{input} is a too large or small quantity");
+        //        return false;
+        //    }
+        //    catch (ArgumentException e)
+        //    {
+        //        MessageBox.Show(e.Message);
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         private void btnAddItemToPackingList_Click(object sender, RoutedEventArgs e)
         {
@@ -283,7 +283,7 @@ namespace TravelPal
                 if (cxTravelDocument.IsChecked == true)
                 {
                     TravelDocument newTravelDocument = new(txtItem.Text, (bool)cxTravelDocumentRequired.IsChecked!);
-                    AddItemToPackingList(newTravelDocument);
+                    TravelManager.AddItemToPackingList(newTravelDocument, lstPackingList);
                     UpdatePackingSection();
                 }
                 else
@@ -292,7 +292,7 @@ namespace TravelPal
                     if (isValidQuantity)
                     {
                         OtherItem newOtherItem = new(txtItem.Text, int.Parse(txtQuantity.Text));
-                        AddItemToPackingList(newOtherItem);
+                        TravelManager.AddItemToPackingList(newOtherItem, lstPackingList);
                         UpdatePackingSection();
                     }
                 }
@@ -314,25 +314,6 @@ namespace TravelPal
             cxTravelDocumentRequired.IsChecked = false;
             lblQuantity.Visibility = Visibility.Visible;
             txtQuantity.Visibility = Visibility.Visible;
-        }
-
-        private void AddItemToPackingList(IPackingListItem document)
-        {
-            ListBoxItem item = new();
-            item.Tag = document;
-            item.Content = document.GetInfo();
-            lstPackingList.Items.Add(item);
-        }
-
-        private List<IPackingListItem> GetPackingList()
-        {
-            List<IPackingListItem> userPackingList = new();
-            foreach (ListBoxItem item in lstPackingList.Items)
-            {
-                IPackingListItem packingListItem = (IPackingListItem)item.Tag;
-                userPackingList.Add(packingListItem);
-            }
-            return userPackingList;
         }
 
         private void cbCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)

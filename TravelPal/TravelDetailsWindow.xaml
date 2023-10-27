@@ -28,6 +28,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
@@ -257,6 +258,24 @@
             IsEnabled="False"
             />
         
+        <!--Datepickers-->
+        <DatePicker
+            Name="dpStartDate"
+            Grid.Column="2"
+            Grid.Row="6"
+            Height="30"
+            HorizontalAlignment="Right"
+            IsEnabled="False"
+            />
+        <DatePicker
+            Name="dpEndDate"
+            Grid.Column="2"
+            Grid.Row="7"
+            Height="30"
+            HorizontalAlignment="Right"
+            IsEnabled="False"
+            />
+
         <!--Listboxes-->
         <ListBox
             Name="lstPackingList"
@@ -267,7 +286,52 @@
             IsEnabled="False"
             />
 
+        <ComboBox
+            Name="cbCountry"
+            Grid.Column="2"
+            Grid.Row="4"
+            Height="30"
+            VerticalContentAlignment="Center"
+            Visibility="Visible"
+            IsEnabled="False"
+            />
+        <ComboBox
+            Name="cbTypeOfTravel"
+            Grid.Column="2"
+            Grid.Row="9"
+            Height="30"
+            VerticalContentAlignment="Center"
+            Visibility="Visible"
+            IsEnabled="False"
+            />
+
         <!--Buttons-->
+
+        <Button
+            Name="btnEdit"
+            Content="Edit travel"
+            Grid.Column="0"
+            Grid.Row="11"
+            Grid.ColumnSpan="6"
+            Height="45"
+            Width="120"
+            FontSize="13"
+            Background="Yellow" Click="btnEdit_Click"
+            />
+        <Button
+            Name="btnSave"
+            Content="Save changes"
+            Grid.Column="0"
+            Grid.Row="11"
+            Grid.ColumnSpan="6"
+            Height="45"
+            Width="120"
+            FontSize="13"
+            Background="MediumSlateBlue" 
+            Foreground="MintCream"
+            Click="btnSave_Click"
+            Visibility="Hidden"
+            />
         <Button
             Name="btnReturn"
             Content="Return to overview"

@@ -348,6 +348,7 @@
             Height="45"
             Width="120"
             FontSize="13"
+            Foreground="MintCream"
             Background="MediumSlateBlue" Click="btnAdd_Click"
             />
         <Button

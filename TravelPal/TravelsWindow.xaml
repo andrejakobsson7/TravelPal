@@ -95,6 +95,7 @@
             Width="100"
             HorizontalAlignment="Left"
             FontSize="13"
+            Foreground="MintCream"
             Background="MediumSlateBlue" Click="btnAdd_Click"
             />
         <Button

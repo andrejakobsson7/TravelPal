@@ -122,7 +122,7 @@ namespace TravelPal.Managers
             if (string.IsNullOrEmpty(input) && sender is Button)
             {
                 Button btn = (Button)sender;
-                if (btn.Name == "btnAdd" || btn.Name == "btnEdit")
+                if (btn.Name == "btnAdd" || btn.Name == "btnSave")
                 {
                     MessageBox.Show("No destination has been entered");
                     return false;
@@ -210,6 +210,25 @@ namespace TravelPal.Managers
                 return false;
             }
             return true;
+        }
+
+        public static List<IPackingListItem> GetPackingList(ListBox packingList)
+        {
+            List<IPackingListItem> userPackingList = new();
+            foreach (ListBoxItem item in packingList.Items)
+            {
+                IPackingListItem packingListItem = (IPackingListItem)item.Tag;
+                userPackingList.Add(packingListItem);
+            }
+            return userPackingList;
+        }
+
+        public static void AddItemToPackingList(IPackingListItem document, ListBox packingList)
+        {
+            ListBoxItem item = new();
+            item.Tag = document;
+            item.Content = document.GetInfo();
+            packingList.Items.Add(item);
         }
         public static void ConfirmSuccessfullyRegisteredTravel(Travel travel)
         {
