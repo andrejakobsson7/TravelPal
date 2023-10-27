@@ -10,11 +10,6 @@
             Name = name;
             Quantity = quantity;
         }
-        public OtherItem()
-        {
-
-        }
-
         public string GetInfo()
         {
             return $"{Quantity} {Name}";

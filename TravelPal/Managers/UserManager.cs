@@ -33,6 +33,11 @@ namespace TravelPal.Managers
                 MessageBox.Show("No username has been entered", "Error");
                 return false;
             }
+            if (username.Length < 3)
+            {
+                MessageBox.Show("Username needs to be at least 3 characters long");
+                return false;
+            }
             return CheckIfUsernameExists(username);
         }
 
@@ -51,9 +56,9 @@ namespace TravelPal.Managers
 
         public static bool ValidatePassword(string password)
         {
-            if (password.Length < 6)
+            if (password.Length < 5)
             {
-                MessageBox.Show("Password needs to be at least 6 characters long", "Error");
+                MessageBox.Show("Password needs to be at least 5 characters long", "Error");
                 return false;
             }
             return true;

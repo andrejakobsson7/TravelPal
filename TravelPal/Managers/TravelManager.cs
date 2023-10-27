@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 using TravelPal.Models;
 
 namespace TravelPal.Managers
 {
     public static class TravelManager
     {
-        public static int TravelId;
+        private static int TravelId;
         public static List<Travel> Travels { get; set; } = new()
         {
             new Vacation
@@ -17,13 +19,9 @@ namespace TravelPal.Managers
                 Travellers = 2,
                 StartDate = DateTime.Today,
                 EndDate = DateTime.Today.AddDays(3),
-                Id = 1,
                 PackingList = new List<IPackingListItem>
                 {
-                    new TravelDocument
-                    {
-                        Name = "Passport", Required = true
-                    }
+                    new TravelDocument("Passport", true)
                 }
             },
             new WorkTrip
@@ -34,13 +32,10 @@ namespace TravelPal.Managers
                 Travellers = 1,
                 StartDate = DateTime.Today,
                 EndDate = DateTime.Today.AddDays(2),
-                Id = 2,
                 PackingList = new List<IPackingListItem>
                 {
-                    new OtherItem
-                    {
-                        Name = "Computer", Quantity = 1
-                    }
+                    new OtherItem("Computer", 1)
+
                 }
             }
         };
@@ -67,7 +62,7 @@ namespace TravelPal.Managers
                 RemoveFromUserTravelList(travelToRemove);
             }
         }
-        public static int GetId()
+        public static int GetNextId()
         {
             return TravelId += 1;
         }
@@ -120,5 +115,106 @@ namespace TravelPal.Managers
             }
             return false;
         }
+
+        //Hur kan jag göra denna metod mer generell?
+        public static bool ValidateStringInput(string input, object sender)
+        {
+            if (string.IsNullOrEmpty(input) && sender is Button)
+            {
+                Button btn = (Button)sender;
+                if (btn.Name == "btnAdd" || btn.Name == "btnEdit")
+                {
+                    MessageBox.Show("No destination has been entered");
+                    return false;
+                }
+                else if (btn.Name == "btnAddItemToPackingList")
+                {
+                    MessageBox.Show("No item has been entered");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool ValidateSelectedItemInComboBox(object value, ComboBox selectedCombobox)
+        {
+            if (value == null)
+            {
+                //Felmeddelandet är generiskt och hämtar typnamnet för första enum i listan som comboboxen avser och displayar i felmeddelandet.
+                MessageBox.Show($"No {selectedCombobox.Items[0].GetType().Name} has been selected");
+                return false;
+            }
+            return true;
+        }
+
+        public static bool ValidateIntInput(string input)
+        {
+            try
+            {
+                int convertedInput = int.Parse(input);
+                if (convertedInput <= 0)
+                {
+                    throw new ArgumentOutOfRangeException("Number must be at least 1");
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show($"{input} is not a valid number");
+                return false;
+            }
+            catch (OverflowException)
+            {
+                MessageBox.Show($"{input} is a too large or small number");
+                return false;
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            return true;
+        }
+        public static bool ValidateSelectedDatesInDatePickers(object? startDate, object? endDate)
+        {
+            if (startDate == null)
+            {
+                MessageBox.Show("No start date has been entered");
+                return false;
+            }
+            else if (endDate == null)
+            {
+                MessageBox.Show("No end date has been entered");
+                return false;
+            }
+            return ValidateDates((DateTime)startDate, (DateTime)endDate);
+        }
+        private static bool ValidateDates(DateTime startDate, DateTime endDate)
+        {
+            if (startDate > endDate)
+            {
+                MessageBox.Show("End date must be after start date");
+                return false;
+            }
+            else if (startDate < DateTime.Today)
+            {
+                MessageBox.Show("Start date can't be before todays' date");
+                return false;
+            }
+            return true;
+        }
+        public static bool ValidateMeetingDetails(string meetingDetails)
+        {
+            if (string.IsNullOrEmpty(meetingDetails))
+            {
+                MessageBox.Show("No meeting details has been entered");
+                return false;
+            }
+            return true;
+        }
+        public static void ConfirmSuccessfullyRegisteredTravel(Travel travel)
+        {
+            MessageBox.Show($"New travel to {travel.Destination} has been registered!");
+        }
+
     }
 }

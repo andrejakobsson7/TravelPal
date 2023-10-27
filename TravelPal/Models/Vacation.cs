@@ -12,12 +12,12 @@ namespace TravelPal.Models
         {
             AllInclusive = isAllInclusive;
         }
-
-        //Konstruktor när man lägger till resa manuellt.
         public Vacation()
         {
 
         }
+
+        //Konstruktor när man lägger till resa manuellt.
         public override string GetInfo()
         {
             return $"{Destination}, {Country} (Vacation)";

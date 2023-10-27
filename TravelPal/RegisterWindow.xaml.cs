@@ -52,7 +52,7 @@ namespace TravelPal
         {
             if (cbCountry.SelectedIndex < 0)
             {
-                MessageBox.Show("No location has been selected", "Error");
+                MessageBox.Show("No country has been selected", "Error");
                 return false;
             }
             return true;
