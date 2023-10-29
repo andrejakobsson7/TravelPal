@@ -46,8 +46,8 @@ namespace TravelPal
             if (isValidChoice)
             {
                 ListBoxItem selectedItem = (ListBoxItem)lstTravels.SelectedItem;
-                Travel selectedTravel = (Travel)selectedItem.Tag;
-                TravelDetailsWindow travelDetailsWindow = new(selectedTravel);
+                TravelManager.SelectedTravel = (Travel)selectedItem.Tag;
+                TravelDetailsWindow travelDetailsWindow = new();
                 travelDetailsWindow.Show();
 
                 Close();

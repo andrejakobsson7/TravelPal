@@ -14,9 +14,22 @@ namespace TravelPal.Models
         public DateTime EndDate { get; set; }
         public int TravelDays { get { return CalculateTravelDays(StartDate, EndDate); } }
         public List<IPackingListItem> PackingList { get; set; }
+
         public Travel(string destination, Country country, int travellers, DateTime startDate, DateTime endDate, List<IPackingListItem> packingList)
         {
             Id = TravelManager.GetNextId();
+            Destination = destination;
+            Country = country;
+            Travellers = travellers;
+            StartDate = startDate;
+            EndDate = endDate;
+            PackingList = packingList;
+        }
+
+        //Constructor som används när man uppdaterar en befintlig resa. För att säkerställa att resan får samma ID-nummer som den som den ersätter, skickar man med ID-numret.
+        public Travel(int id, string destination, Country country, int travellers, DateTime startDate, DateTime endDate, List<IPackingListItem> packingList)
+        {
+            Id = id;
             Destination = destination;
             Country = country;
             Travellers = travellers;

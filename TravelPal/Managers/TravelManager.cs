@@ -40,6 +40,8 @@ namespace TravelPal.Managers
             }
         };
 
+        public static Travel? SelectedTravel { get; set; }
+
         public static void AddTravel(Travel travel)
         {
             Travels.Add(travel);

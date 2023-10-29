@@ -12,6 +12,11 @@ namespace TravelPal.Models
         {
             MeetingDetails = meetingDetails;
         }
+        public WorkTrip(int id, string meetingDetails, string destination, Country country, int travellers, DateTime startDate, DateTime endDate, List<IPackingListItem> packingList) : base(id, destination, country, travellers, startDate, endDate, packingList)
+        {
+            MeetingDetails = meetingDetails;
+        }
+
         public WorkTrip()
         {
 

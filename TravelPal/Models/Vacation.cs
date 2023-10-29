@@ -12,6 +12,10 @@ namespace TravelPal.Models
         {
             AllInclusive = isAllInclusive;
         }
+        public Vacation(int id, bool isAllInclusive, string destination, Country country, int travellers, DateTime startDate, DateTime endDate, List<IPackingListItem> packingList) : base(id, destination, country, travellers, startDate, endDate, packingList)
+        {
+            AllInclusive = isAllInclusive;
+        }
         public Vacation()
         {
 
