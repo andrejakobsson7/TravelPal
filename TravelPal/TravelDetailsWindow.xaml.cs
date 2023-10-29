@@ -17,7 +17,7 @@ namespace TravelPal
             InitializeComponent();
             FillComboBoxes();
             //Läs in informationen till alla fält och visa ut den.
-            txtDestination.Text = TravelManager.SelectedTravel.Destination;
+            txtDestination.Text = TravelManager.SelectedTravel!.Destination;
             txtCountry.Text = TravelManager.SelectedTravel.Country.ToString();
             txtTravellers.Text = TravelManager.SelectedTravel.Travellers.ToString();
             dpStartDate.SelectedDate = TravelManager.SelectedTravel.StartDate;
@@ -30,15 +30,11 @@ namespace TravelPal
             if (TravelManager.SelectedTravel.GetType() == typeof(Vacation))
             {
                 Vacation selectedVacation = (Vacation)TravelManager.SelectedTravel;
-                lblWorkTripOrVacation.Content = "All Inclusive";
-                cxAllInclusive.Visibility = Visibility.Visible;
                 cxAllInclusive.IsChecked = selectedVacation.AllInclusive;
             }
             else if (TravelManager.SelectedTravel.GetType() == typeof(WorkTrip))
             {
                 WorkTrip selectedWorkTrip = (WorkTrip)TravelManager.SelectedTravel;
-                lblWorkTripOrVacation.Content = "Meeting details";
-                txtMeetingDetails.Visibility = Visibility.Visible;
                 txtMeetingDetails.Text = selectedWorkTrip.MeetingDetails;
             }
         }
@@ -53,7 +49,7 @@ namespace TravelPal
 
         private void AddAllItemsButTheFirstToPackingList(Travel travel)
         {
-            for (int i = 1; i < travel.PackingList.Count; i++)
+            for (int i = 1; i < travel.PackingList!.Count; i++)
             {
                 ListBoxItem item = new();
                 item.Tag = travel.PackingList[i];
@@ -62,6 +58,7 @@ namespace TravelPal
             }
         }
 
+        //Följande metod används första gången när man öppnar upp "Travel Details Window".
         private void AddAllItemsToPackingList(Travel travel)
         {
             foreach (IPackingListItem packItem in travel.PackingList)
@@ -277,14 +274,6 @@ namespace TravelPal
                 ListBoxItem item = (ListBoxItem)lstPackingList.SelectedItem;
                 IPackingListItem packItem = (IPackingListItem)item.Tag;
                 lstPackingList.Items.Remove(lstPackingList.SelectedItem);
-                for (int i = 0; i < TravelManager.SelectedTravel.PackingList.Count; i++)
-                {
-                    if (TravelManager.SelectedTravel.PackingList[i] == packItem)
-                    {
-                        TravelManager.SelectedTravel.PackingList.RemoveAt(i);
-                        break;
-                    }
-                }
             }
         }
         private bool ValidateItemHasBeenSelected()

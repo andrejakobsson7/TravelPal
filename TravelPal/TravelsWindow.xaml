@@ -149,6 +149,21 @@
             Foreground="DarkOrange"
             Margin="0 0 5 0" Click="btnReturn_Click"
             />
-        
+        <Button
+            Name="btnUserInfo"
+            Content="Manage my account"
+            Grid.Column="1"
+            Grid.Row="5"
+            Grid.ColumnSpan="2"
+            Height="35"
+            HorizontalAlignment="left"
+            VerticalAlignment="Bottom"
+            FontSize="14"
+            Background="Transparent"
+            Foreground="DarkOrange"
+            BorderBrush="Transparent"
+            Margin="0 0 5 0" Click="btnUserInfo_Click"
+            />
+
     </Grid>
 </Window>

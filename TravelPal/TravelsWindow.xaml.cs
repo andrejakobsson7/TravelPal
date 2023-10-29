@@ -107,5 +107,13 @@ namespace TravelPal
             }
 
         }
+
+        private void btnUserInfo_Click(object sender, RoutedEventArgs e)
+        {
+            UserDetailsWindow userDetailsWindow = new();
+            userDetailsWindow.Show();
+
+            Close();
+        }
     }
 }

@@ -63,6 +63,16 @@ namespace TravelPal.Managers
             }
             return true;
         }
+
+        public static bool ComparePasswords(string enteredPassword, string confirmationPassword)
+        {
+            if (enteredPassword != confirmationPassword)
+            {
+                MessageBox.Show("Passwords are not identical, try again!");
+                return false;
+            }
+            return true;
+        }
         public static IUser RegisterUser(string username, string password, Country country)
         {
             User newUser = new(username, password, country);

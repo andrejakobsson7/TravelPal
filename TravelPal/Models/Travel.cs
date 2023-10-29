@@ -7,13 +7,13 @@ namespace TravelPal.Models
     public class Travel
     {
         public int Id { get; set; }
-        public string Destination { get; set; }
+        public string? Destination { get; set; }
         public Country Country { get; set; }
         public int Travellers { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int TravelDays { get { return CalculateTravelDays(StartDate, EndDate); } }
-        public List<IPackingListItem> PackingList { get; set; }
+        public List<IPackingListItem>? PackingList { get; set; }
 
         public Travel(string destination, Country country, int travellers, DateTime startDate, DateTime endDate, List<IPackingListItem> packingList)
         {
