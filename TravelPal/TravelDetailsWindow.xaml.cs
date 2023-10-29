@@ -92,6 +92,14 @@ namespace TravelPal
             cbCountry.IsEnabled = true;
             cbTypeOfTravel.IsEnabled = true;
             cxAllInclusive.IsEnabled = true;
+            lblAddnewItem.Visibility = Visibility.Visible;
+            txtItem.Visibility = Visibility.Visible;
+            lblItem.Visibility = Visibility.Visible;
+            cxTravelDocument.Visibility = Visibility.Visible;
+            lblQuantity.Visibility = Visibility.Visible;
+            txtQuantity.Visibility = Visibility.Visible;
+            btnAddItemToPackingList.Visibility = Visibility.Visible;
+            btnRemoveItemFromPackingList.Visibility = Visibility.Visible;
         }
         private void FillComboBoxes()
         {
@@ -210,6 +218,88 @@ namespace TravelPal
                     AddAllItemsButTheFirstToPackingList(TravelManager.SelectedTravel!);
                 }
             }
+        }
+        private void cxTravelDocument_Checked(object sender, RoutedEventArgs e)
+        {
+            cxTravelDocumentRequired.Visibility = Visibility.Visible;
+            cxTravelDocumentRequired.IsChecked = false;
+            lblQuantity.Visibility = Visibility.Hidden;
+            txtQuantity.Visibility = Visibility.Hidden;
+        }
+
+        private void cxTravelDocument_Unchecked(object sender, RoutedEventArgs e)
+        {
+            cxTravelDocumentRequired.Visibility = Visibility.Hidden;
+            cxTravelDocumentRequired.IsChecked = false;
+            lblQuantity.Visibility = Visibility.Visible;
+            txtQuantity.Visibility = Visibility.Visible;
+        }
+        private void btnAddItemToPackingList_Click(object sender, RoutedEventArgs e)
+        {
+            bool isValidItem = TravelManager.ValidateStringInput(txtItem.Text, (Button)sender);
+            if (isValidItem)
+            {
+                if (cxTravelDocument.IsChecked == true)
+                {
+                    TravelDocument newTravelDocument = new(txtItem.Text, (bool)cxTravelDocumentRequired.IsChecked!);
+                    TravelManager.AddItemToPackingList(newTravelDocument, lstPackingList);
+                    UpdatePackingSection();
+                }
+                else
+                {
+                    bool isValidQuantity = TravelManager.ValidateIntInput(txtQuantity.Text);
+                    if (isValidQuantity)
+                    {
+                        OtherItem newOtherItem = new(txtItem.Text, int.Parse(txtQuantity.Text));
+                        TravelManager.AddItemToPackingList(newOtherItem, lstPackingList);
+                        UpdatePackingSection();
+                    }
+                }
+            }
+
+        }
+        private void UpdatePackingSection()
+        {
+            txtItem.Text = "";
+            cxTravelDocument.IsChecked = false;
+            cxTravelDocumentRequired.Visibility = Visibility.Hidden;
+            cxTravelDocumentRequired.IsChecked = false;
+            lblQuantity.Visibility = Visibility.Visible;
+            txtQuantity.Visibility = Visibility.Visible;
+            txtQuantity.Text = "";
+        }
+
+        private void btnRemoveItemFromPackingList_Click(object sender, RoutedEventArgs e)
+        {
+            bool isValidItem = ValidateItemHasBeenSelected();
+            if (isValidItem)
+            {
+                ListBoxItem item = (ListBoxItem)lstPackingList.SelectedItem;
+                IPackingListItem packItem = (IPackingListItem)item.Tag;
+                lstPackingList.Items.Remove(lstPackingList.SelectedItem);
+                for (int i = 0; i < TravelManager.SelectedTravel.PackingList.Count; i++)
+                {
+                    if (TravelManager.SelectedTravel.PackingList[i] == packItem)
+                    {
+                        TravelManager.SelectedTravel.PackingList.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+        }
+        private bool ValidateItemHasBeenSelected()
+        {
+            if (lstPackingList.SelectedIndex < 0)
+            {
+                MessageBox.Show("No item has been selected");
+                return false;
+            }
+            else if (lstPackingList.SelectedIndex == 0)
+            {
+                MessageBox.Show("Passport cannot be removed from packing list");
+                return false;
+            }
+            return true;
         }
     }
 }

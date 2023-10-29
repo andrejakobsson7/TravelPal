@@ -170,6 +170,52 @@
             HorizontalAlignment="Left"
             Padding="0"
             />
+        <Label
+            Name="lblAddnewItem"
+            Content="Add new item to packing list"
+            Grid.Column="4"
+            Grid.Row="7"
+            Grid.ColumnSpan="2"
+            FontSize="13"
+            FontFamily="Arial"
+            Foreground="black"
+            FontStyle="Italic"
+            FontWeight="DemiBold"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Margin="5 5 0 0"
+            Padding="0 5"
+            Visibility="Hidden"
+            />
+        <Label
+            Name="lblItem"
+            Content="Item"
+            Grid.Column="4"
+            Grid.Row="7"
+            Grid.ColumnSpan="2"
+            FontSize="13"
+            FontFamily="Arial"
+            Foreground="black"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Left"
+            Margin="5 0 0 0"
+            Padding="0 5"
+            Visibility="Hidden"
+            />
+        <Label
+            Name="lblQuantity"
+            Content="Quantity"
+            Grid.Column="4"
+            Grid.Row="8"
+            FontSize="13"
+            FontFamily="Arial"
+            Foreground="black"
+            VerticalAlignment="Center"
+            HorizontalAlignment="right"
+            Visibility="Hidden"
+            Margin="5 10 5 0"
+            Padding="0 5"
+            />
 
         <!--Textboxes-->
         <TextBox
@@ -225,6 +271,27 @@
             VerticalContentAlignment="Center"
             IsReadOnly="True"
             />
+        <TextBox
+            Name="txtItem"
+            Grid.Column="4"
+            Grid.Row="7"
+            Grid.ColumnSpan="2"
+            Height="25"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="Bottom"
+            Margin="50 0 0 0"
+            Visibility="Hidden"
+            />
+        <TextBox
+            Name="txtQuantity"
+            Grid.Column="5"
+            Grid.Row="8"
+            Height="25"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="center"
+            Visibility="Hidden"
+            Margin="0 10 0 0"
+            />
         <!--Checkboxes-->
         <CheckBox
             Name="cxAllInclusive"
@@ -237,7 +304,36 @@
             Visibility="Hidden"
             IsEnabled="False"
             />
-        
+        <CheckBox
+            Name="cxTravelDocument"
+            Content="Item is a travel document"
+            Grid.Column="4"
+            Grid.Row="8"
+            Grid.ColumnSpan="2"
+            FontSize="13"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Checked="cxTravelDocument_Checked"
+            Unchecked="cxTravelDocument_Unchecked"
+            Margin="5 5"
+            Visibility="Hidden"
+            />
+        <CheckBox
+            Name="cxTravelDocumentRequired"
+            Content="Required"
+            Grid.Column="4"
+            Grid.Row="8"
+            Grid.ColumnSpan="2"
+            FontSize="13"
+            Height="30"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Visibility="Hidden"
+            Margin="5 15 0 10"
+            />
+
         <!--Datepickers-->
         <DatePicker
             Name="dpStartDate"
@@ -329,6 +425,35 @@
             BorderBrush="Transparent"
             Foreground="DarkOrange"
             Margin="0 0 5 0" Click="btnReturn_Click"
+            />
+        <Button
+            Name="btnAddItemToPackingList"
+            Content="Add item"
+            Grid.Column="4"
+            Grid.Row="9"
+            Grid.ColumnSpan="2"
+            Height="30"
+            Width="80"
+            FontSize="12"
+            VerticalAlignment="Top"
+            Background="Yellow" Click="btnAddItemToPackingList_Click"
+            Margin="0 5"
+            Visibility="Hidden"
+            />
+        <Button
+            Name="btnRemoveItemFromPackingList"
+            Content="Remove item"
+            Grid.Column="5"
+            Grid.Row="9"
+            Grid.ColumnSpan="1"
+            Height="30"
+            Width="80"
+            FontSize="12"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Background="DarkOrange" Click="btnRemoveItemFromPackingList_Click"
+            Margin="0 5"
+            Visibility="Hidden"
             />
     </Grid>
 </Window>

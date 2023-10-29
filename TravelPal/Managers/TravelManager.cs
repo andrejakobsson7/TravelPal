@@ -21,7 +21,8 @@ namespace TravelPal.Managers
                 EndDate = DateTime.Today.AddDays(3),
                 PackingList = new List<IPackingListItem>
                 {
-                    new TravelDocument("Passport", true)
+                    new TravelDocument("Passport", true),
+                    new OtherItem("Telephone", 1)
                 }
             },
             new WorkTrip
@@ -34,6 +35,7 @@ namespace TravelPal.Managers
                 EndDate = DateTime.Today.AddDays(2),
                 PackingList = new List<IPackingListItem>
                 {
+                    new TravelDocument("Passport", false),
                     new OtherItem("Computer", 1)
 
                 }
