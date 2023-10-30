@@ -32,7 +32,7 @@ namespace TravelPal
             if (isValidUsername && isValidPassword && isValidCountry)
             {
                 IUser newUser = UserManager.RegisterUser(txtUsername.Text, pbPassword.Password, (Country)cbCountry.SelectedItem);
-                MessageBoxResult answer = MessageBox.Show($"{newUser.Username} has been successfully registered! Click 'OK' to go back to login page", "Confirmation", MessageBoxButton.OKCancel);
+                MessageBoxResult answer = MessageBox.Show($"{newUser.Username} has been successfully registered! Click 'OK' to go back to login page", "Confirmation", MessageBoxButton.OKCancel, MessageBoxImage.Information);
                 if (answer == MessageBoxResult.OK)
                 {
                     MainWindow mainWindow = new();

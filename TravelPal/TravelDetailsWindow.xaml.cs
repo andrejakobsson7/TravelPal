@@ -217,6 +217,30 @@ namespace TravelPal
                 }
             }
         }
+        private void dpStartDate_DateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender == (DatePicker)sender)
+            {
+                DatePicker dp = (DatePicker)sender;
+                if (dp.IsEnabled)
+                {
+                    txtTravelDays.Text = ((DateTime)dpEndDate.SelectedDate! - (DateTime)dpStartDate.SelectedDate!).TotalDays.ToString();
+                }
+            }
+        }
+
+        private void dpEndDate_DateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender == (DatePicker)sender)
+            {
+                DatePicker dp = (DatePicker)sender;
+                if (dp.IsEnabled)
+                {
+                    txtTravelDays.Text = ((DateTime)dpEndDate.SelectedDate! - (DateTime)dpStartDate.SelectedDate!).TotalDays.ToString();
+                }
+            }
+        }
+
         private void cxTravelDocument_Checked(object sender, RoutedEventArgs e)
         {
             cxTravelDocumentRequired.Visibility = Visibility.Visible;

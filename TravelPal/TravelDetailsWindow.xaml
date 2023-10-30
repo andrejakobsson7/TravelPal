@@ -356,6 +356,7 @@
             IsEnabled="False"
             HorizontalAlignment="Left"
             VerticalContentAlignment="Center"
+            SelectedDateChanged="dpStartDate_DateChanged"
             />
         <DatePicker
             Name="dpEndDate"
@@ -367,6 +368,7 @@
             IsEnabled="False"
             HorizontalAlignment="Left"
             VerticalContentAlignment="Center"
+            SelectedDateChanged="dpEndDate_DateChanged"
             />
 
         <!--Listboxes-->

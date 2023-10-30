@@ -154,6 +154,9 @@ namespace TravelPal.Managers
                     }
                 }
             }
+            //Om en admin redigerar en resa tillagd av en admin så plockar vi bara bort den och lägger till den nya.
+            Travels.Remove(travelToRemove);
+            Travels.Add(travelToAdd);
             return false;
         }
 
@@ -281,7 +284,7 @@ namespace TravelPal.Managers
 
         public static void ConfirmSuccessfullyRegisteredTravel(Travel travel)
         {
-            MessageBox.Show($"New travel to {travel.Destination} has been registered!", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            MessageBox.Show($"New travel to {travel.Destination} has been registered!", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
     }
