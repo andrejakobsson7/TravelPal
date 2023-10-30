@@ -17,7 +17,7 @@ namespace TravelPal
             UpdateUi();
         }
 
-        private void btnReturn_Click(object sender, RoutedEventArgs e)
+        private void btnSignOut_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new();
             mainWindow.Show();
@@ -70,12 +70,13 @@ namespace TravelPal
             if (isValidChoice)
             {
                 ListBoxItem selectedItem = (ListBoxItem)lstTravels.SelectedItem;
-                Travel selectedTravel = (Travel)selectedItem.Tag;
-                MessageBoxResult response = MessageBox.Show($"Please confirm that you want to remove travel to {selectedTravel.Destination}.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                TravelManager.SelectedTravel = (Travel)selectedItem.Tag;
+                MessageBoxResult response = MessageBox.Show($"Please confirm that you want to remove travel to {TravelManager.SelectedTravel.Destination}.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (response == MessageBoxResult.Yes)
                 {
-                    TravelManager.RemoveTravel(selectedTravel);
+                    TravelManager.RemoveTravel(TravelManager.SelectedTravel);
                     MessageBox.Show("Travel was successfully removed", "Confirmation");
+                    TravelManager.SelectedTravel = null;
                     UpdateUi();
                 }
             }
@@ -88,10 +89,8 @@ namespace TravelPal
                 User loggedInUser = (User)UserManager.SignedInUser;
                 foreach (Travel travel in loggedInUser.Travels)
                 {
-                    ListBoxItem item = new();
-                    item.Tag = travel;
-                    item.Content = travel.GetInfo();
-                    lstTravels.Items.Add(item);
+                    TravelManager.AddTravelToUiList(travel, lstTravels);
+
                 }
             }
             else if (UserManager.SignedInUser.GetType() == typeof(Admin))
@@ -99,10 +98,7 @@ namespace TravelPal
                 lblTravels.Content = "All registered travels";
                 foreach (Travel travel in TravelManager.Travels)
                 {
-                    ListBoxItem item = new();
-                    item.Tag = travel;
-                    item.Content = travel.GetInfo();
-                    lstTravels.Items.Add(item);
+                    TravelManager.AddTravelToUiList(travel, lstTravels);
                 }
             }
 

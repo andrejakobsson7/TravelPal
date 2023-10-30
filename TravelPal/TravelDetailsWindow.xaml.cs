@@ -16,27 +16,7 @@ namespace TravelPal
         {
             InitializeComponent();
             FillComboBoxes();
-            //Läs in informationen till alla fält och visa ut den.
-            txtDestination.Text = TravelManager.SelectedTravel!.Destination;
-            txtCountry.Text = TravelManager.SelectedTravel.Country.ToString();
-            txtTravellers.Text = TravelManager.SelectedTravel.Travellers.ToString();
-            dpStartDate.SelectedDate = TravelManager.SelectedTravel.StartDate;
-            dpEndDate.SelectedDate = TravelManager.SelectedTravel.EndDate;
-            cbCountry.SelectedItem = TravelManager.SelectedTravel.Country;
-            cbTypeOfTravel.SelectedItem = TravelManager.SelectedTravel.GetType().Name;
-            txtTravelDays.Text = TravelManager.SelectedTravel.TravelDays.ToString();
-            txtTypeOfTravel.Text = TravelManager.SelectedTravel.GetType().Name.ToString();
-            AddAllItemsToPackingList(TravelManager.SelectedTravel);
-            if (TravelManager.SelectedTravel.GetType() == typeof(Vacation))
-            {
-                Vacation selectedVacation = (Vacation)TravelManager.SelectedTravel;
-                cxAllInclusive.IsChecked = selectedVacation.AllInclusive;
-            }
-            else if (TravelManager.SelectedTravel.GetType() == typeof(WorkTrip))
-            {
-                WorkTrip selectedWorkTrip = (WorkTrip)TravelManager.SelectedTravel;
-                txtMeetingDetails.Text = selectedWorkTrip.MeetingDetails;
-            }
+            ReadInAllTravelInformation();
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
@@ -61,7 +41,7 @@ namespace TravelPal
         //Följande metod används första gången när man öppnar upp "Travel Details Window".
         private void AddAllItemsToPackingList(Travel travel)
         {
-            foreach (IPackingListItem packItem in travel.PackingList)
+            foreach (IPackingListItem packItem in travel.PackingList!)
             {
                 ListBoxItem item = new();
                 item.Tag = packItem;
@@ -98,6 +78,31 @@ namespace TravelPal
             btnAddItemToPackingList.Visibility = Visibility.Visible;
             btnRemoveItemFromPackingList.Visibility = Visibility.Visible;
         }
+
+        private void ReadInAllTravelInformation()
+        {
+            //Läs in informationen till alla fält och visa ut den.
+            txtDestination.Text = TravelManager.SelectedTravel!.Destination;
+            txtCountry.Text = TravelManager.SelectedTravel.Country.ToString();
+            txtTravellers.Text = TravelManager.SelectedTravel.Travellers.ToString();
+            dpStartDate.SelectedDate = TravelManager.SelectedTravel.StartDate;
+            dpEndDate.SelectedDate = TravelManager.SelectedTravel.EndDate;
+            cbCountry.SelectedItem = TravelManager.SelectedTravel.Country;
+            cbTypeOfTravel.SelectedItem = TravelManager.SelectedTravel.GetType().Name;
+            txtTravelDays.Text = TravelManager.SelectedTravel.TravelDays.ToString();
+            txtTypeOfTravel.Text = TravelManager.SelectedTravel.GetType().Name.ToString();
+            AddAllItemsToPackingList(TravelManager.SelectedTravel);
+            if (TravelManager.SelectedTravel.GetType() == typeof(Vacation))
+            {
+                Vacation selectedVacation = (Vacation)TravelManager.SelectedTravel;
+                cxAllInclusive.IsChecked = selectedVacation.AllInclusive;
+            }
+            else if (TravelManager.SelectedTravel.GetType() == typeof(WorkTrip))
+            {
+                WorkTrip selectedWorkTrip = (WorkTrip)TravelManager.SelectedTravel;
+                txtMeetingDetails.Text = selectedWorkTrip.MeetingDetails;
+            }
+        }
         private void FillComboBoxes()
         {
             foreach (Enum country in Enum.GetValues(typeof(Country)))
@@ -128,19 +133,15 @@ namespace TravelPal
                 //ID-numret sätts till samma som man klickat sig in på, och sedan tar vi bort resan som man klickat sig in från.
                 if (selectedTravelType == TravelType.Vacation)
                 {
-                    bool isAllInclusive = (bool)cxAllInclusive.IsChecked!;
-                    Vacation updatedVacation = new(TravelManager.SelectedTravel!.Id, isAllInclusive, txtDestination.Text, (Country)cbCountry.SelectedItem, int.Parse(txtTravellers.Text), (DateTime)dpStartDate.SelectedDate!, (DateTime)dpEndDate.SelectedDate!, userPackingList);
-                    TravelManager.AddTravel(updatedVacation);
-                    TravelManager.RemoveTravel(TravelManager.SelectedTravel!);
+                    Vacation updatedVacation = new(TravelManager.SelectedTravel!.Id, (bool)cxAllInclusive.IsChecked!, txtDestination.Text, (Country)cbCountry.SelectedItem, int.Parse(txtTravellers.Text), (DateTime)dpStartDate.SelectedDate!, (DateTime)dpEndDate.SelectedDate!, userPackingList);
+                    TravelManager.ReplaceTravelInTravelList(TravelManager.SelectedTravel, updatedVacation);
                     TravelManager.SelectedTravel = null;
                     ConfirmAndCloseTravelDetailsWindow();
                 }
                 else if (selectedTravelType == TravelType.WorkTrip && TravelManager.ValidateMeetingDetails(txtMeetingDetails.Text))
                 {
-                    string meetingDetails = txtMeetingDetails.Text;
-                    WorkTrip updatedWorkTrip = new(TravelManager.SelectedTravel!.Id, meetingDetails, txtDestination.Text, (Country)cbCountry.SelectedItem, int.Parse(txtTravellers.Text), (DateTime)dpStartDate.SelectedDate!, (DateTime)dpEndDate.SelectedDate!, userPackingList);
-                    TravelManager.AddTravel(updatedWorkTrip);
-                    TravelManager.RemoveTravel(TravelManager.SelectedTravel!);
+                    WorkTrip updatedWorkTrip = new(TravelManager.SelectedTravel!.Id, txtMeetingDetails.Text, txtDestination.Text, (Country)cbCountry.SelectedItem, int.Parse(txtTravellers.Text), (DateTime)dpStartDate.SelectedDate!, (DateTime)dpEndDate.SelectedDate!, userPackingList);
+                    TravelManager.ReplaceTravelInTravelList(TravelManager.SelectedTravel, updatedWorkTrip);
                     TravelManager.SelectedTravel = null;
                     ConfirmAndCloseTravelDetailsWindow();
                 }
@@ -271,8 +272,6 @@ namespace TravelPal
             bool isValidItem = ValidateItemHasBeenSelected();
             if (isValidItem)
             {
-                ListBoxItem item = (ListBoxItem)lstPackingList.SelectedItem;
-                IPackingListItem packItem = (IPackingListItem)item.Tag;
                 lstPackingList.Items.Remove(lstPackingList.SelectedItem);
             }
         }

@@ -26,6 +26,28 @@ namespace TravelPal
             Close();
         }
 
+        private void cbCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //När man byter land i comboboxen så räknar vi ut vilket typ av pass som skall läggas till i packlistan och lägger till det.
+            if (cbCountry.SelectedIndex >= 0)
+            {
+                IPackingListItem defaultItem = TravelManager.AddDefaultPackingListItem(UserManager.SignedInUser!.Location, (Country)cbCountry.SelectedItem);
+                ListBoxItem item = new();
+                item.Tag = defaultItem;
+                item.Content = defaultItem.GetInfo();
+                //Följande säkerställer att "manuellt tillagda item" i packlistan inte försvinner när man byter land i comboboxen.
+                //Om man har lagt till något i packlistan innan man valt land så försvinner dock det itemet.
+                try
+                {
+                    lstPackingList.Items[0] = item;
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    lstPackingList.Items.Add(item);
+                }
+            }
+        }
+
         private void cbTypeOfTravel_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             //Börja med att återställa till "default-läge" för att ha höjd för om man togglar.
@@ -60,16 +82,15 @@ namespace TravelPal
                 TravelType selectedTravelType = (TravelType)cbTypeOfTravel.SelectedItem;
                 if (selectedTravelType == TravelType.Vacation)
                 {
-                    bool isAllInclusive = (bool)cxAllInclusive.IsChecked!;
-                    Vacation newVacation = new(isAllInclusive, txtDestination.Text, (Country)cbCountry.SelectedItem, int.Parse(txtTravellers.Text), (DateTime)dpStartDate.SelectedDate!, (DateTime)dpEndDate.SelectedDate!, userPackingList);
+                    //bool isAllInclusive = (bool)cxAllInclusive.IsChecked!;
+                    Vacation newVacation = new((bool)cxAllInclusive.IsChecked!, txtDestination.Text, (Country)cbCountry.SelectedItem, int.Parse(txtTravellers.Text), (DateTime)dpStartDate.SelectedDate!, (DateTime)dpEndDate.SelectedDate!, userPackingList);
                     TravelManager.AddTravel(newVacation);
                     TravelManager.ConfirmSuccessfullyRegisteredTravel(newVacation);
                     UpdateUi();
                 }
                 else if (selectedTravelType == TravelType.WorkTrip && TravelManager.ValidateMeetingDetails(txtMeetingDetails.Text))
                 {
-                    string meetingDetails = txtMeetingDetails.Text;
-                    WorkTrip newWorkTrip = new(meetingDetails, txtDestination.Text, (Country)cbCountry.SelectedItem, int.Parse(txtTravellers.Text), (DateTime)dpStartDate.SelectedDate!, (DateTime)dpEndDate.SelectedDate!, userPackingList);
+                    WorkTrip newWorkTrip = new(txtMeetingDetails.Text, txtDestination.Text, (Country)cbCountry.SelectedItem, int.Parse(txtTravellers.Text), (DateTime)dpStartDate.SelectedDate!, (DateTime)dpEndDate.SelectedDate!, userPackingList);
                     TravelManager.AddTravel(newWorkTrip);
                     TravelManager.ConfirmSuccessfullyRegisteredTravel(newWorkTrip);
                     UpdateUi();
@@ -151,19 +172,6 @@ namespace TravelPal
             cxTravelDocumentRequired.IsChecked = false;
             lblQuantity.Visibility = Visibility.Visible;
             txtQuantity.Visibility = Visibility.Visible;
-        }
-
-        private void cbCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbCountry.SelectedIndex >= 0)
-            {
-                lstPackingList.Items.Clear();
-                IPackingListItem defaultItem = TravelManager.AddDefaultPackingListItem(UserManager.SignedInUser!.Location, (Country)cbCountry.SelectedItem);
-                ListBoxItem item = new();
-                item.Tag = defaultItem;
-                item.Content = defaultItem.GetInfo();
-                lstPackingList.Items.Add(item);
-            }
         }
     }
 }

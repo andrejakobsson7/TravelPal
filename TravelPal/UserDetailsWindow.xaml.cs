@@ -14,10 +14,7 @@ namespace TravelPal
         {
             InitializeComponent();
             FillComboBoxes();
-            txtCurrentUsername.Text = UserManager.SignedInUser.Username;
-            txtNewUsername.Text = UserManager.SignedInUser.Username;
-            cbCurrentCountry.SelectedItem = UserManager.SignedInUser.Location;
-            cbNewCountry.SelectedItem = UserManager.SignedInUser.Location;
+            ReadInAllUserInformation();
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
@@ -69,14 +66,13 @@ namespace TravelPal
                     User signedInCustomer = (User)UserManager.SignedInUser;
                     foreach (Travel travel in signedInCustomer.Travels)
                     {
-                        travel.PackingList[0] = TravelManager.AddDefaultPackingListItem(UserManager.SignedInUser.Location, travel.Country);
+                        travel.PackingList![0] = TravelManager.AddDefaultPackingListItem(UserManager.SignedInUser.Location, travel.Country);
                     }
                 }
             }
             if (isUsernameChanged || isPasswordChanged || isCountryChanged)
             {
                 ConfirmAndCloseUserDetailsWindow();
-
             }
         }
 
@@ -87,6 +83,14 @@ namespace TravelPal
                 cbCurrentCountry.Items.Add(country);
                 cbNewCountry.Items.Add(country);
             }
+        }
+
+        private void ReadInAllUserInformation()
+        {
+            txtCurrentUsername.Text = UserManager.SignedInUser!.Username;
+            txtNewUsername.Text = UserManager.SignedInUser.Username;
+            cbCurrentCountry.SelectedItem = UserManager.SignedInUser.Location;
+            cbNewCountry.SelectedItem = UserManager.SignedInUser.Location;
         }
 
         private void ConfirmAndCloseUserDetailsWindow()

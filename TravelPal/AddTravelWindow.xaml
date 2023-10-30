@@ -205,6 +205,7 @@
             Grid.Column="2"
             Grid.Row="3"
             Height="30"
+            FontFamily="Arial"
             VerticalContentAlignment="Center"
             />
         <TextBox
@@ -213,6 +214,7 @@
             Grid.Row="5"
             Height="30"
             Width="125"
+            FontFamily="Arial"
             VerticalContentAlignment="Center"
             HorizontalAlignment="Left"
             />
@@ -221,6 +223,7 @@
             Grid.Column="2"
             Grid.Row="9"
             Height="30"
+            FontFamily="Arial"
             Visibility="Hidden"
             VerticalContentAlignment="Center"
             />
@@ -230,6 +233,7 @@
             Grid.Row="7"
             Grid.ColumnSpan="2"
             Height="25"
+            FontFamily="Arial"
             VerticalContentAlignment="Center"
             VerticalAlignment="Bottom"
             Margin="50 0 0 0"
@@ -239,6 +243,7 @@
             Grid.Column="5"
             Grid.Row="8"
             Height="25"
+            FontFamily="Arial"
             VerticalContentAlignment="Center"
             VerticalAlignment="center"
             Visibility="Visible"
@@ -252,6 +257,7 @@
             Grid.Row="4"
             Grid.ColumnSpan="2"
             Grid.RowSpan="3"
+            FontFamily="Arial"
             />
 
 
@@ -261,6 +267,7 @@
             Grid.Column="2"
             Grid.Row="4"
             Height="30"
+            FontFamily="Arial"
             VerticalContentAlignment="Center"
             SelectionChanged="cbCountry_SelectionChanged"
             />
@@ -269,6 +276,7 @@
             Grid.Column="2"
             Grid.Row="8"
             Height="30"
+            FontFamily="Arial"
             VerticalContentAlignment="Center"
             SelectionChanged="cbTypeOfTravel_SelectionChanged"
             />
@@ -281,6 +289,7 @@
             Height="30"
             Width="125"
             FontSize="13"
+            FontFamily="Arial"
             VerticalContentAlignment="Center"
             HorizontalAlignment="Left"
             BorderBrush="#FFABADB3"
@@ -293,6 +302,7 @@
             Height="30"
             Width="125"
             FontSize="13"
+            FontFamily="Arial"
             VerticalContentAlignment="Center"
             HorizontalAlignment="Left"
             BorderBrush="#FFABADB3"
@@ -306,6 +316,7 @@
             Grid.Row="9"
             Height="30"
             FontSize="15"
+            FontFamily="Arial"
             VerticalContentAlignment="Center"
             Visibility="Hidden"
             />
@@ -316,6 +327,7 @@
             Grid.Row="8"
             Grid.ColumnSpan="2"
             FontSize="13"
+            FontFamily="Arial"
             VerticalContentAlignment="Center"
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
@@ -331,6 +343,7 @@
             Grid.ColumnSpan="2"
             FontSize="13"
             Height="30"
+            FontFamily="Arial"
             VerticalContentAlignment="Center"
             VerticalAlignment="Center"
             HorizontalAlignment="Left"
@@ -348,6 +361,7 @@
             Height="45"
             Width="120"
             FontSize="13"
+            FontFamily="Arial"
             Foreground="MintCream"
             Background="MediumSlateBlue" Click="btnAdd_Click"
             />
@@ -360,6 +374,7 @@
             VerticalAlignment="center"
             HorizontalAlignment="Right"
             FontSize="15"
+            FontFamily="Arial"
             Background="Transparent"
             BorderBrush="Transparent"
             Foreground="DarkOrange"
@@ -373,6 +388,7 @@
             Grid.ColumnSpan="2"
             Height="30"
             Width="70"
+            FontFamily="Arial"
             FontSize="13"
             VerticalAlignment="Top"
             Background="Yellow" Click="btnAddItemToPackingList_Click"

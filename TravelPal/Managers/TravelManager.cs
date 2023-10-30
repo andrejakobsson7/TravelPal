@@ -120,7 +120,43 @@ namespace TravelPal.Managers
             return false;
         }
 
-        //Hur kan jag göra denna metod mer generell?
+        //Följande metod ersätter vald resa med ny resa.
+        //Eftersom att ändringar som admin gör måste reflekteras tillbaka i användarens egna lista så är det olika hantering beroende på om man är user eller admin.
+        public static bool ReplaceTravelInTravelList(Travel travelToRemove, Travel travelToAdd)
+        {
+            if (UserManager.SignedInUser!.GetType() == typeof(User))
+            {
+                User signedInCustomer = (User)UserManager.SignedInUser!;
+                for (int i = 0; i < signedInCustomer.Travels.Count; i++)
+                {
+                    if (signedInCustomer.Travels[i].Id == travelToRemove.Id)
+                    {
+                        signedInCustomer.Travels[i] = travelToAdd;
+                        Travels[i] = travelToAdd;
+                        return true;
+                    }
+                }
+            }
+            else if (UserManager.SignedInUser!.GetType() == typeof(Admin))
+            {
+                foreach (IUser user in UserManager.Users)
+                {
+                    if (user.GetType() == typeof(User))
+                    {
+                        User userToCheck = (User)user;
+                        for (int i = 0; i < userToCheck.Travels.Count; i++)
+                            if (userToCheck.Travels[i].Id == travelToRemove.Id)
+                            {
+                                userToCheck.Travels[i] = travelToAdd;
+                                Travels[i] = travelToAdd;
+                                return true;
+                            }
+                    }
+                }
+            }
+            return false;
+        }
+
         public static bool ValidateStringInput(string input, object sender)
         {
             if (string.IsNullOrEmpty(input) && sender is Button)
@@ -128,12 +164,12 @@ namespace TravelPal.Managers
                 Button btn = (Button)sender;
                 if (btn.Name == "btnAdd" || btn.Name == "btnSave")
                 {
-                    MessageBox.Show("No destination has been entered");
+                    MessageBox.Show("No destination has been entered", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
                 else if (btn.Name == "btnAddItemToPackingList")
                 {
-                    MessageBox.Show("No item has been entered");
+                    MessageBox.Show("No item has been entered", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
             }
@@ -145,7 +181,7 @@ namespace TravelPal.Managers
             if (value == null)
             {
                 //Felmeddelandet är generiskt och hämtar typnamnet för första enum i listan som comboboxen avser och displayar i felmeddelandet.
-                MessageBox.Show($"No {selectedCombobox.Items[0].GetType().Name} has been selected");
+                MessageBox.Show($"No {selectedCombobox.Items[0].GetType().Name} has been selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;
@@ -163,17 +199,17 @@ namespace TravelPal.Managers
             }
             catch (FormatException)
             {
-                MessageBox.Show($"{input} is not a valid number");
+                MessageBox.Show($"{input} is not a valid number", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             catch (OverflowException)
             {
-                MessageBox.Show($"{input} is a too large or small number");
+                MessageBox.Show($"{input} is a too large or small number", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             catch (ArgumentOutOfRangeException e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;
@@ -182,12 +218,12 @@ namespace TravelPal.Managers
         {
             if (startDate == null)
             {
-                MessageBox.Show("No start date has been entered");
+                MessageBox.Show("No start date has been entered", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             else if (endDate == null)
             {
-                MessageBox.Show("No end date has been entered");
+                MessageBox.Show("No end date has been entered", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return ValidateDates((DateTime)startDate, (DateTime)endDate);
@@ -196,12 +232,12 @@ namespace TravelPal.Managers
         {
             if (startDate > endDate)
             {
-                MessageBox.Show("End date must be after start date");
+                MessageBox.Show("End date must be after start date", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             else if (startDate < DateTime.Today)
             {
-                MessageBox.Show("Start date can't be before todays' date");
+                MessageBox.Show("Start date can't be before todays' date", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;
@@ -210,7 +246,7 @@ namespace TravelPal.Managers
         {
             if (string.IsNullOrEmpty(meetingDetails))
             {
-                MessageBox.Show("No meeting details has been entered");
+                MessageBox.Show("No meeting details has been entered", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;
@@ -234,9 +270,18 @@ namespace TravelPal.Managers
             item.Content = document.GetInfo();
             packingList.Items.Add(item);
         }
+
+        public static void AddTravelToUiList(Travel travel, ListBox travelList)
+        {
+            ListBoxItem item = new();
+            item.Tag = travel;
+            item.Content = travel.GetInfo();
+            travelList.Items.Add(item);
+        }
+
         public static void ConfirmSuccessfullyRegisteredTravel(Travel travel)
         {
-            MessageBox.Show($"New travel to {travel.Destination} has been registered!");
+            MessageBox.Show($"New travel to {travel.Destination} has been registered!", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
     }

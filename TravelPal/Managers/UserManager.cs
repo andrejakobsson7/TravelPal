@@ -30,12 +30,12 @@ namespace TravelPal.Managers
         {
             if (string.IsNullOrEmpty(username))
             {
-                MessageBox.Show("No username has been entered", "Error");
+                MessageBox.Show("No username has been entered", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             if (username.Length < 3)
             {
-                MessageBox.Show("Username needs to be at least 3 characters long");
+                MessageBox.Show("Username needs to be at least 3 characters long", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return CheckIfUsernameExists(username);
@@ -47,7 +47,7 @@ namespace TravelPal.Managers
             {
                 if (user.Username == username)
                 {
-                    MessageBox.Show("Username is already in use, please choose another one", "Error");
+                    MessageBox.Show("Username is already in use, please choose another one", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
             }
@@ -58,7 +58,7 @@ namespace TravelPal.Managers
         {
             if (password.Length < 5)
             {
-                MessageBox.Show("Password needs to be at least 5 characters long", "Error");
+                MessageBox.Show("Password needs to be at least 5 characters long", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;
@@ -68,7 +68,7 @@ namespace TravelPal.Managers
         {
             if (enteredPassword != confirmationPassword)
             {
-                MessageBox.Show("Passwords are not identical, try again!");
+                MessageBox.Show("Passwords are not identical, try again!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;
@@ -80,7 +80,6 @@ namespace TravelPal.Managers
             return newUser;
         }
 
-        //Method used when signing in from MainWindow.
         public static bool SignIn(string username, string password)
         {
             foreach (IUser user in Users)
@@ -91,7 +90,7 @@ namespace TravelPal.Managers
                     return true;
                 }
             }
-            MessageBox.Show("Invalid username and/or password", "Error");
+            MessageBox.Show("Invalid username and/or password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             return false;
         }
     }
