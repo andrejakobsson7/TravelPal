@@ -21,7 +21,6 @@ namespace TravelPal.Models
 
         }
 
-        //Konstruktor när man lägger till resa manuellt.
         public override string GetInfo()
         {
             return $"{Destination}, {Country} (Vacation)";

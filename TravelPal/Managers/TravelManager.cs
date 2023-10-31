@@ -183,7 +183,7 @@ namespace TravelPal.Managers
         {
             if (value == null)
             {
-                //Felmeddelandet är generiskt och hämtar typnamnet för första enum i listan som comboboxen avser och displayar i felmeddelandet.
+                //Felmeddelandet är generellt och hämtar typnamnet för första enum i listan som comboboxen avser och displayar i felmeddelandet.
                 MessageBox.Show($"No {selectedCombobox.Items[0].GetType().Name} has been selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }

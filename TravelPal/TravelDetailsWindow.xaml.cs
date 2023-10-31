@@ -130,7 +130,7 @@ namespace TravelPal
 
                 //Behöver sedan skapa en ny resa eftersom att jag inte kan komma åt och uppdatera vilken typ av resa det är.
                 //Uppdaterar både resan i 'databasen' och användarens lista.
-                //ID-numret sätts till samma som man klickat sig in på, och sedan tar vi bort resan som man klickat sig in från.
+                //ID-numret sätts till samma som man klickat sig in på, och sedan ersätter vi resan med den nya.
                 if (selectedTravelType == TravelType.Vacation)
                 {
                     Vacation updatedVacation = new(TravelManager.SelectedTravel!.Id, (bool)cxAllInclusive.IsChecked!, txtDestination.Text, (Country)cbCountry.SelectedItem, int.Parse(txtTravellers.Text), (DateTime)dpStartDate.SelectedDate!, (DateTime)dpEndDate.SelectedDate!, userPackingList);
@@ -150,7 +150,7 @@ namespace TravelPal
 
         private void ConfirmAndCloseTravelDetailsWindow()
         {
-            MessageBox.Show("Travel was successfully updated. Close this window to return to overview-page");
+            MessageBox.Show("Travel was successfully updated. Close this window to return to overview-page", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
             TravelsWindow travelsWindow = new();
             travelsWindow.Show();
 
@@ -303,12 +303,12 @@ namespace TravelPal
         {
             if (lstPackingList.SelectedIndex < 0)
             {
-                MessageBox.Show("No item has been selected");
+                MessageBox.Show("No item has been selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             else if (lstPackingList.SelectedIndex == 0)
             {
-                MessageBox.Show("Passport cannot be removed from packing list");
+                MessageBox.Show("Passport cannot be removed from packing list", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;

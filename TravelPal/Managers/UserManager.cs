@@ -14,7 +14,7 @@ namespace TravelPal.Managers
                 Username = "user",
                 Password = "password",
                 Location = Country.Sweden,
-                //This ensures that the user has the same travels that are registered as "default-travels" in TravelManager.
+                //Nedanstående tillägg av resor till användarens reselista säkerställer att att det är samma resor som finns i TravelManagers statiska lista.
                 Travels = new List<Travel>
                 {
                     TravelManager.Travels[0],
@@ -25,7 +25,6 @@ namespace TravelPal.Managers
 
         public static IUser? SignedInUser { get; set; }
 
-        //Methods for validating username and password when registering as a new customer.
         public static bool ValidateUsername(string username)
         {
             if (string.IsNullOrEmpty(username))

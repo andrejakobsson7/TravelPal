@@ -75,7 +75,7 @@ namespace TravelPal
                 if (response == MessageBoxResult.Yes)
                 {
                     TravelManager.RemoveTravel(TravelManager.SelectedTravel);
-                    MessageBox.Show("Travel was successfully removed", "Confirmation");
+                    MessageBox.Show("Travel was successfully removed", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
                     TravelManager.SelectedTravel = null;
                     UpdateUi();
                 }

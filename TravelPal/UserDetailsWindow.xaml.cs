@@ -59,7 +59,7 @@ namespace TravelPal
                 UserManager.SignedInUser!.Location = (Country)cbNewCountry.SelectedItem;
                 isCountryChanged = true;
 
-                //Följande kod säkerställer att rätt typ av "Passport"(required/ej) läggs till på användarens resa när man ändrat sin location.
+                //Följande kod säkerställer att rätt typ av "Passport"(required / ej) läggs till på användarens resa när man ändrat sin location.
                 //Admin har inga resor så behöver inte göra något med det.
                 if (UserManager.SignedInUser.GetType() == typeof(User))
                 {
