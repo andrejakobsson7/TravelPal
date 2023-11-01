@@ -82,7 +82,6 @@ namespace TravelPal
                 TravelType selectedTravelType = (TravelType)cbTypeOfTravel.SelectedItem;
                 if (selectedTravelType == TravelType.Vacation)
                 {
-                    //bool isAllInclusive = (bool)cxAllInclusive.IsChecked!;
                     Vacation newVacation = new((bool)cxAllInclusive.IsChecked!, txtDestination.Text, (Country)cbCountry.SelectedItem, int.Parse(txtTravellers.Text), (DateTime)dpStartDate.SelectedDate!, (DateTime)dpEndDate.SelectedDate!, userPackingList);
                     TravelManager.AddTravel(newVacation);
                     TravelManager.ConfirmSuccessfullyRegisteredTravel(newVacation);

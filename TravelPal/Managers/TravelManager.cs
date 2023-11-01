@@ -124,6 +124,8 @@ namespace TravelPal.Managers
         //Eftersom att ändringar som admin gör måste reflekteras tillbaka i användarens egna lista så är det olika hantering beroende på om man är user eller admin.
         public static bool ReplaceTravelInTravelList(Travel travelToRemove, Travel travelToAdd)
         {
+            Travels.Add(travelToAdd);
+            Travels.Remove(travelToRemove);
             if (UserManager.SignedInUser!.GetType() == typeof(User))
             {
                 User signedInCustomer = (User)UserManager.SignedInUser!;
@@ -132,11 +134,11 @@ namespace TravelPal.Managers
                     if (signedInCustomer.Travels[i].Id == travelToRemove.Id)
                     {
                         signedInCustomer.Travels[i] = travelToAdd;
-                        Travels[i] = travelToAdd;
                         return true;
                     }
                 }
             }
+            //Om admin tar bort en resa behöver vi lista ut hos vem resan ligger hos med hjälp av ID-numret och sedan ersätta med den nya resan.
             else if (UserManager.SignedInUser!.GetType() == typeof(Admin))
             {
                 foreach (IUser user in UserManager.Users)
@@ -148,15 +150,11 @@ namespace TravelPal.Managers
                             if (userToCheck.Travels[i].Id == travelToRemove.Id)
                             {
                                 userToCheck.Travels[i] = travelToAdd;
-                                Travels[i] = travelToAdd;
                                 return true;
                             }
                     }
                 }
             }
-            //Om en admin redigerar en resa tillagd av en admin så plockar vi bara bort den och lägger till den nya.
-            Travels.Remove(travelToRemove);
-            Travels.Add(travelToAdd);
             return false;
         }
 
@@ -184,7 +182,7 @@ namespace TravelPal.Managers
             if (value == null)
             {
                 //Felmeddelandet är generellt och hämtar typnamnet för första enum i listan som comboboxen avser och displayar i felmeddelandet.
-                MessageBox.Show($"No {selectedCombobox.Items[0].GetType().Name} has been selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"No {selectedCombobox.Items[0].GetType().Name.ToLower()} has been selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;
