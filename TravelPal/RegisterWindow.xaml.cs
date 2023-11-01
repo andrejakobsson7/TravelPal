@@ -26,20 +26,16 @@ namespace TravelPal
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
-            bool isValidUsername = UserManager.ValidateUsername(txtUsername.Text);
-            bool isValidPassword = UserManager.ValidatePassword(pbPassword.Password);
             bool isValidCountry = ValidateSelectedItemInComboBox();
-            if (isValidUsername && isValidPassword && isValidCountry)
+            if (isValidCountry)
             {
                 IUser newUser = UserManager.RegisterUser(txtUsername.Text, pbPassword.Password, (Country)cbCountry.SelectedItem);
-                MessageBoxResult answer = MessageBox.Show($"{newUser.Username} has been successfully registered! Click 'OK' to go back to login page", "Confirmation", MessageBoxButton.OKCancel, MessageBoxImage.Information);
-                if (answer == MessageBoxResult.OK)
+                if (newUser != null)
                 {
-                    MainWindow mainWindow = new();
-                    mainWindow.Show();
-                    Close();
+                    ConfirmAndCloseRegisterWindow(newUser.Username);
                 }
             }
+
         }
         private void AddCountriesToCombobox()
         {
@@ -56,6 +52,15 @@ namespace TravelPal
                 return false;
             }
             return true;
+        }
+
+        private void ConfirmAndCloseRegisterWindow(string username)
+        {
+            MessageBox.Show($"{username} has been successfully registered as a new customer! You will now be redirected to login page", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
+            MainWindow mainWindow = new();
+            mainWindow.Show();
+
+            Close();
         }
     }
 }

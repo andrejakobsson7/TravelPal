@@ -27,8 +27,6 @@ namespace TravelPal
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            //Validera input. Är new username samma som old username?
-            //Har man angett något nytt lösenord?
             //Land behöver inte valideras, eftersom att man inte kan välja "null".
             bool isUsernameChanged = false;
             bool isPasswordChanged = false;
@@ -36,32 +34,19 @@ namespace TravelPal
 
             if (txtNewUsername.Text != txtCurrentUsername.Text)
             {
-                isUsernameChanged = UserManager.ValidateUsername(txtNewUsername.Text);
-                if (isUsernameChanged)
-                {
-                    UserManager.SignedInUser!.Username = txtNewUsername.Text;
-                }
+                isUsernameChanged = UserManager.UpdateUsername(UserManager.SignedInUser!, txtNewUsername.Text);
             }
             if (pbNewPassword.Password != "")
             {
-                isPasswordChanged = UserManager.ValidatePassword(pbNewPassword.Password);
-                if (isPasswordChanged)
-                {
-                    isPasswordChanged = UserManager.ComparePasswords(pbNewPassword.Password, pbConfirmPassword.Password);
-                    if (isPasswordChanged)
-                    {
-                        UserManager.SignedInUser!.Password = pbConfirmPassword.Password;
-                    }
-                }
+                isPasswordChanged = UserManager.UpdatePassword(UserManager.SignedInUser!, pbNewPassword.Password, pbConfirmPassword.Password);
             }
             if (cbNewCountry.SelectedIndex != cbCurrentCountry.SelectedIndex)
             {
-                UserManager.SignedInUser!.Location = (Country)cbNewCountry.SelectedItem;
-                isCountryChanged = true;
+                isCountryChanged = UserManager.UpdateCountry(UserManager.SignedInUser!, (Country)cbNewCountry.SelectedItem);
 
                 //Följande kod säkerställer att rätt typ av "Passport"(required / ej) läggs till på användarens resa när man ändrat sin location.
                 //Admin har inga resor så behöver inte göra något med det.
-                if (UserManager.SignedInUser.GetType() == typeof(User))
+                if (UserManager.SignedInUser!.GetType() == typeof(User))
                 {
                     User signedInCustomer = (User)UserManager.SignedInUser;
                     foreach (Travel travel in signedInCustomer.Travels)

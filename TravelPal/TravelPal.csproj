@@ -7,4 +7,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="MicrosoftTeams-image.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="MicrosoftTeams-image.png" />
+  </ItemGroup>
+
 </Project>

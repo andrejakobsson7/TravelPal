@@ -138,7 +138,7 @@ namespace TravelPal.Managers
                     }
                 }
             }
-            //Om admin tar bort en resa behöver vi lista ut hos vem resan ligger hos med hjälp av ID-numret och sedan ersätta med den nya resan.
+            //Om admin ändrar en resa behöver vi lista ut hos vem resan ligger hos med hjälp av ID-numret och sedan ersätta med den nya resan.
             else if (UserManager.SignedInUser!.GetType() == typeof(Admin))
             {
                 foreach (IUser user in UserManager.Users)
