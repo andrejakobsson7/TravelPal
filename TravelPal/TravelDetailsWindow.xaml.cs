@@ -12,6 +12,7 @@ namespace TravelPal
     /// </summary>
     public partial class TravelDetailsWindow : Window
     {
+        Country PreviousCountry = TravelManager.SelectedTravel!.Country;
         public TravelDetailsWindow()
         {
             InitializeComponent();
@@ -25,17 +26,6 @@ namespace TravelPal
             travelsWindow.Show();
 
             Close();
-        }
-
-        private void AddAllItemsButTheFirstToPackingList(Travel travel)
-        {
-            for (int i = 1; i < travel.PackingList!.Count; i++)
-            {
-                ListBoxItem item = new();
-                item.Tag = travel.PackingList[i];
-                item.Content = travel.PackingList[i].GetInfo();
-                lstPackingList.Items.Insert(i, item);
-            }
         }
 
         //Följande metod används första gången när man öppnar upp "Travel Details Window".
@@ -198,25 +188,12 @@ namespace TravelPal
 
         private void cbCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender == (ComboBox)sender)
-            {
-                ComboBox cbb = (ComboBox)sender;
-                //Detta säkerställer att följande kod bara körs när användaren själv har valt något nytt land i rullistan. 
-                //När sidan startas är comboboxen inte "enabled".
-                //Vi flyttar med packlistan (utom första saken i listan, som alltid är passet, för den räknas fram (om den är required eller ej) och läggs till som default item.
-
-                if (cbb.IsEnabled)
-                {
-                    lstPackingList.Items.Clear();
-                    IPackingListItem defaultItem = TravelManager.AddDefaultPackingListItem(UserManager.SignedInUser!.Location, (Country)cbCountry.SelectedItem);
-                    ListBoxItem item = new();
-                    item.Tag = defaultItem;
-                    item.Content = defaultItem.GetInfo();
-                    lstPackingList.Items.Insert(0, item);
-                    AddAllItemsButTheFirstToPackingList(TravelManager.SelectedTravel!);
-                }
-            }
+            /*
+             * Vid ändring av resa kan jag inte erbjuda samma funktionalitet som när man lägger till en ny resa gällande att lägga till korrekt pass (required/ej) i packlistan,
+            eftersom att jag inte har tillgång till användaren som skapat resans location.
+            Om jag hade lagt in User på varje Travel så hade det varit möjligt */
         }
+
         private void dpStartDate_DateChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender == (DatePicker)sender)
@@ -304,11 +281,6 @@ namespace TravelPal
             if (lstPackingList.SelectedIndex < 0)
             {
                 MessageBox.Show("No item has been selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-            else if (lstPackingList.SelectedIndex == 0)
-            {
-                MessageBox.Show("Passport cannot be removed from packing list", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;

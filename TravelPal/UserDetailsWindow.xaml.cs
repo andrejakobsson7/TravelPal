@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using TravelPal.Managers;
-using TravelPal.Models;
 
 namespace TravelPal
 {
@@ -44,16 +43,7 @@ namespace TravelPal
             {
                 isCountryChanged = UserManager.UpdateCountry(UserManager.SignedInUser!, (Country)cbNewCountry.SelectedItem);
 
-                //Följande kod säkerställer att rätt typ av "Passport"(required / ej) läggs till på användarens resa när man ändrat sin location.
-                //Admin har inga resor så behöver inte göra något med det.
-                if (UserManager.SignedInUser!.GetType() == typeof(User))
-                {
-                    User signedInCustomer = (User)UserManager.SignedInUser;
-                    foreach (Travel travel in signedInCustomer.Travels)
-                    {
-                        travel.PackingList![0] = TravelManager.AddDefaultPackingListItem(UserManager.SignedInUser.Location, travel.Country);
-                    }
-                }
+                //Vid ändring av location ändrar inte systemet något "default pass" i användarens resor - det får man göra själv.
             }
             if (isUsernameChanged || isPasswordChanged || isCountryChanged)
             {
