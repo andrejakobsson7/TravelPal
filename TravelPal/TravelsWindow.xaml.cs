@@ -58,7 +58,7 @@ namespace TravelPal
         {
             if (lstTravels.SelectedIndex < 0)
             {
-                MessageBox.Show("No travel has been selected");
+                MessageBox.Show("No travel has been selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;

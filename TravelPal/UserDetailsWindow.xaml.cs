@@ -70,7 +70,7 @@ namespace TravelPal
 
         private void ConfirmAndCloseUserDetailsWindow()
         {
-            MessageBox.Show("Changes successfully saved. Close this window to return to overview-page");
+            MessageBox.Show("Changes successfully saved. Close this window to return to overview-page", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
             TravelsWindow travelsWindow = new();
             travelsWindow.Show();
 

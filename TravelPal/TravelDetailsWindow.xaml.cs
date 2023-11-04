@@ -12,7 +12,6 @@ namespace TravelPal
     /// </summary>
     public partial class TravelDetailsWindow : Window
     {
-        Country PreviousCountry = TravelManager.SelectedTravel!.Country;
         public TravelDetailsWindow()
         {
             InitializeComponent();
